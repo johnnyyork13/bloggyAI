@@ -4,6 +4,8 @@ import AddUserForm from './components/AddUserForm';
 import AddPostForm from './components/AddPostForm';
 import PostCardContainer from './components/PostCardContainer';
 import Post from './components/Post';
+import Login from './components/Login';
+import SignUp from './components/SignUp';
 import './App.css'
 import './assets/styles/post.css';
 import PostCard from './components/PostCard';
@@ -47,8 +49,7 @@ function App() {
           <PostCardContainer 
             setPage={setPage}
             setPost={setPost}
-          />}
-        
+        />}
         {page === "post" && 
           <Post 
             user={currentUser}
@@ -59,6 +60,16 @@ function App() {
           <AddPostForm
             user={currentUser}
             handleFormSubmit={handleFormSubmit}
+          />
+        }
+        {page === "login" &&
+          <Login 
+            setPage={setPage}
+          />
+        }
+        {page === "signup" &&
+          <SignUp 
+            setPage={setPage}
           />
         }
       </main>

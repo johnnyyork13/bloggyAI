@@ -114,6 +114,7 @@
     display: grid;
     grid-template-rows: 40px;
     grid-auto-rows: fit-content;
+    gap: 5px;
     grid-template-columns: 1fr;
     margin-bottom: 50px;
 }
@@ -123,10 +124,6 @@
     font-weight: bolder;
     color: var(--textDark);
     font-size: 1.2rem;
-}
-
-.comment-input-container {
-    
 }
 
 .comment-author-input {
