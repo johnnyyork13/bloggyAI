@@ -14,13 +14,8 @@ function App() {
 
   const [post, setPost] = React.useState({});
   const [page, setPage] = React.useState("home");
-
-  const currentUser = {
-    _id: "65465afc8bb9610875e00da0",
-    username: "johnnyyork13",
-    password: "test",
-    membership: "admin",
-  }
+  const [currentUser, setCurrentUser] = React.useState(null)
+  
 
   async function handleFormSubmit(e, data, url) {
     setPage("home");
@@ -43,12 +38,15 @@ function App() {
     <div className='App'>
       <Header
         setPage={setPage}
+        setCurrentUser={setCurrentUser}
+        currentUser={currentUser}
       />
       <main>
         {page === "home" && 
           <PostCardContainer 
             setPage={setPage}
             setPost={setPost}
+            header={"Recent Posts"}
         />}
         {page === "post" && 
           <Post 
@@ -65,6 +63,7 @@ function App() {
         {page === "login" &&
           <Login 
             setPage={setPage}
+            setCurrentUser={setCurrentUser}
           />
         }
         {page === "signup" &&

@@ -15,7 +15,7 @@ export default function Post(props) {
     const [sendComment, setSendComment] = React.useState(false);
 
     React.useEffect(() => {
-        const url = `http://localhost:3000/blog/user/${props.user.username}/post/${props.post._id}`;
+        const url = `http://localhost:3000/blog/post/${props.post._id}`;
         async function getPost() {
             try {
                 await fetch(url)
@@ -29,7 +29,7 @@ export default function Post(props) {
     }, []);
 
     React.useEffect(() => {
-        const url = `http://localhost:3000/blog/user/${props.user.username}/post/${props.post._id}/delete`;
+        const url = `http://localhost:3000/blog/post/${props.post._id}/delete`;
         async function handleDeletePost() {
             try {
                 if (deletePost) {
@@ -54,7 +54,7 @@ export default function Post(props) {
         async function addComment() {
             if (sendComment) {
                 try {
-                    const url = `http://localhost:3000/blog/user/${props.user.username}/post/${props.post._id}/addComment`;
+                    const url = `http://localhost:3000/blog/post/${props.post._id}/addComment`;
                     await fetch(url, {
                         method: "POST",
                         mode: "cors",

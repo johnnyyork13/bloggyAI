@@ -32,6 +32,7 @@ export default function PostCardContainer(props) {
 
     return (
         <section className="post-card-container-container">
+            <p className="post-card-container-container-header">{props.header}</p>
             {mappedPosts.length > 0 ? mappedPosts : "No Posts to Show."}
         </section>
     )

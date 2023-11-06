@@ -4,7 +4,16 @@
     grid-template-columns: repeat(3, minmax(200px, 1fr));
     grid-auto-rows: 200px;
     gap: 30px;
-    margin-top: 30px;
+    margin-top: 60px;
+    position: relative;
+}
+
+.post-card-container-container-header {
+    width: 100%;
+    text-align: center;
+    top: -70px;
+    position: absolute;
+    font-size: 1.5rem;
 }
 
 .post-card-container {

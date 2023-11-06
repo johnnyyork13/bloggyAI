@@ -26,9 +26,9 @@ export default function Login(props) {
             body: JSON.stringify(user)
           }).then((res) => res.json())
           .then((res) => {
-            if (res.success) {
-              //setPage("home")
-              console.log("LOGIN SUCCESS");
+            if (res) {
+              props.setPage("home")
+              props.setCurrentUser(res);
             } else {
               setLoginError(true)
             }
@@ -41,9 +41,9 @@ export default function Login(props) {
     return (
         <section className="login-container">
             <form>
-                <input onChange={handleInputChange} type="text" name="username" placeholder="Username" />
-                <input onChange={handleInputChange} type="password" name="password" placeholder="Password" />
-                <button type="button" onClick={handleLogin}>Login</button>
+                <input className="login-input" onChange={handleInputChange} type="text" name="username" placeholder="Username" />
+                <input className="login-input" onChange={handleInputChange} type="password" name="password" placeholder="Password" suggest="current-password"/>
+                <button className="login-btn post-page-btn" type="button" onClick={handleLogin}>Login</button>
             </form>
             <section className="login-error-container">
                 {loginError && <p>Username or password incorrect.</p>}
