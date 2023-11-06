@@ -24,8 +24,8 @@ export default function Header(props) {
                         handleLogout();
                         props.setCurrentUser(null)}}
                     >Logout</a>}
-                {!props.currentUser && <a onClick={() => props.setPage("login")}>Login</a>}
-                {!props.currentUser && <a onClick={() => props.setPage("signup")}>Sign Up</a>}
+                {!props.currentUser && <a onClick={() => props.setPage("login")}>Sign In</a>}
+                {/* {!props.currentUser && <a onClick={() => props.setPage("signup")}>Create an Account</a>} */}
                 
             </nav>
         </header>

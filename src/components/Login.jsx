@@ -27,8 +27,12 @@ export default function Login(props) {
           }).then((res) => res.json())
           .then((res) => {
             if (res) {
-              props.setPage("home")
-              props.setCurrentUser(res);
+              if (!res.message) {
+                props.setPage("home")
+                props.setCurrentUser(res);
+              } else {
+                setLoginError(true);
+              }
             } else {
               setLoginError(true)
             }
@@ -40,10 +44,12 @@ export default function Login(props) {
 
     return (
         <section className="login-container">
+            <p className="login-container-header">Login</p>
             <form>
                 <input className="login-input" onChange={handleInputChange} type="text" name="username" placeholder="Username" />
                 <input className="login-input" onChange={handleInputChange} type="password" name="password" placeholder="Password" suggest="current-password"/>
-                <button className="login-btn post-page-btn" type="button" onClick={handleLogin}>Login</button>
+                <button className="login-btn post-page-btn" type="button" onClick={handleLogin}>Submit</button>
+                <p className="new-user-header">New User? <span onClick={() => props.setPage("signup")} className="create-blog-btn">Create a New Blog</span></p>
             </form>
             <section className="login-error-container">
                 {loginError && <p>Username or password incorrect.</p>}

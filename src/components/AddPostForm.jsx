@@ -2,12 +2,12 @@ import React from 'react';
 
 export default function AddPostForm(props) {
 
-    const url = `http://localhost:3000/blog/user/${props.user.username}/post/add`;
+    const url = `http://localhost:3000/blog/user/${props.currentUser}/post/add`;
 
     const [post, setPost] = React.useState({
         title: "",
         body: "",
-        author: props.user._id,
+        author: props.currentUser.username,
         tags: "",
     })
 

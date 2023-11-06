@@ -99,16 +99,17 @@ export default function Post(props) {
 
     return (   
         <section className="post">
-            <a className="post-page-btn post-delete-btn" onClick={() => setDeletePost(true)}>Delete Post</a>
+            {props.currentUser.username === post.author && <a className="post-page-btn post-delete-btn" onClick={() => setDeletePost(true)}>Delete Post</a>}
             <h1>{post.title && post.title}</h1>
+            <p>Posted by {props.currentUser.displayName}</p>
             <p className="post-body">{post.body && post.body}</p>
             <a className="post-page-btn post-back-btn" onClick={() => props.setPage("home")}>Back Home</a>
             <section className="post-comments">
-                <section className="comment-input-container">
+                {props.currentUser ? <section className="comment-input-container">
                     <input onChange={handleCommentInputChange} name="author" className="comment-author-input" placeholder="Name" />
                     <input onChange={handleCommentInputChange} name="body" className="comment-body-input" placeholder="Comments" />
                     <button onClick={handleCommentSubmit} type="button" className="comment-submit-btn post-page-btn">Submit</button>
-                </section>
+                </section> : <p className="comment-notification">You must be logged in to add comments. <span className="comment-login-btn" onClick={() => props.setPage("login")}>Log In</span></p>}
                 <p className="comments-title">Comments</p>
                 {post.comments && post.comments.length === 0 ?
                     "Be the first to comment:" : 

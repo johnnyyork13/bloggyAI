@@ -4,7 +4,10 @@ export default function SignUp(props) {
 
     const [user, setUser] = React.useState({
         username: "",
-        password: ""
+        displayName: "",
+        email: "",
+        password: "",
+
     })
 
     function handleInputChange(e) {
@@ -23,7 +26,12 @@ export default function SignUp(props) {
                 headers: {
                     "Content-Type":"application/json",
                 },
-                body: JSON.stringify(user)
+                body: JSON.stringify({
+                    username: user.username,
+                    displayName: user.displayName,
+                    email: user.email,
+                    password: user.password
+                })
             })
         } catch(err) {
             console.log(err);
@@ -31,11 +39,15 @@ export default function SignUp(props) {
     }
 
     return (
-        <section className="signup-container">
+        <section className="login-container">
+            <p className="login-container-header">Create New Blog</p>
             <form>
-                <input onChange={handleInputChange} type="text" name="username" placeholder="Username" />
-                <input onChange={handleInputChange} type="password" name="password" placeholder="Password" />
-                <button type="button" onClick={handleSignUp}>Sign Up</button>
+                <input className="login-input" onChange={handleInputChange} type="text" name="username" placeholder="Username" required/>
+                <input className="login-input" onChange={handleInputChange} type="text" name="displayName" placeholder='Display Name' />
+                <input className="login-input" onChange={handleInputChange} type="email" name="email" placeholder='Email' />
+                <input className="login-input" onChange={handleInputChange} type="password" name="password" placeholder='Password' />
+                <input className="login-input" onChange={handleInputChange} type="password" name="confirmPassword" placeholder="Confirm Password" />
+                <button className="login-btn post-page-btn" type="submit" onClick={handleSignUp}>Sign Up</button>
             </form>
         </section>
     )

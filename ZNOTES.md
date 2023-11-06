@@ -2,6 +2,8 @@ SCHEMA
     USER {
         username: STRING,
         password: STRING,
+        displayName: STRING,
+        email: STRING
         membership: enum["user", "admin"],
     }
 

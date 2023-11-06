@@ -1,5 +1,6 @@
 import React from 'react';
 import PostCard from './PostCard';
+import PostSidebar from './PostSidebar';
 import { v4 as uuidv4 } from 'uuid';
 
 export default function PostCardContainer(props) {
