@@ -15,7 +15,7 @@ export default function Post(props) {
     const [sendComment, setSendComment] = React.useState(false);
 
     React.useEffect(() => {
-        const url = `http://localhost:3000/blog/post/${props.post._id}`;
+        const url = `http://localhost:3000/blog/post/${props.currentPost._id}`;
         async function getPost() {
             try {
                 await fetch(url)
@@ -29,7 +29,7 @@ export default function Post(props) {
     }, []);
 
     React.useEffect(() => {
-        const url = `http://localhost:3000/blog/post/${props.post._id}/delete`;
+        const url = `http://localhost:3000/blog/post/${props.currentPost._id}/delete`;
         async function handleDeletePost() {
             try {
                 if (deletePost) {
@@ -39,7 +39,7 @@ export default function Post(props) {
                         headers: {
                             "Content-Type": "application/json"
                         },
-                        body: JSON.stringify({postID: props.post._id})
+                        body: JSON.stringify({postID: props.currentPost._id})
                     })
                     .then(() => {props.setPage("home")});
                 }
@@ -54,7 +54,7 @@ export default function Post(props) {
         async function addComment() {
             if (sendComment) {
                 try {
-                    const url = `http://localhost:3000/blog/post/${props.post._id}/addComment`;
+                    const url = `http://localhost:3000/blog/post/${props.currentPost._id}/addComment`;
                     await fetch(url, {
                         method: "POST",
                         mode: "cors",
@@ -62,10 +62,11 @@ export default function Post(props) {
                             "Content-Type":"application/json",
                         },
                         body: JSON.stringify({
-                            postID: props.post._id,
+                            postID: props.currentPost._id,
                             comment: comment
                         })
-                    }).then(() => {setSendComment(false)})
+                    }).then((res) => res.json())
+                    .then((res) => setSendComment(false));
                 } catch(err) {
                     console.log(err);
                 }
@@ -84,6 +85,7 @@ export default function Post(props) {
     function handleCommentSubmit() {
         setComment((prev) => ({
             ...prev,
+            author: props.currentUser.displayName,
             date: new Date()
         }))
         setSendComment(true);
@@ -97,17 +99,17 @@ export default function Post(props) {
         />
     })
 
+    console.log(sendComment);
     return (   
         <section className="post">
-            {props.currentUser.username === post.author && <a className="post-page-btn post-delete-btn" onClick={() => setDeletePost(true)}>Delete Post</a>}
+            {props.currentUser && props.currentUser.username === post.author && <a className="post-page-btn post-delete-btn" onClick={() => setDeletePost(true)}>Delete Post</a>}
             <h1>{post.title && post.title}</h1>
-            <p>Posted by {props.currentUser.displayName}</p>
+            <p>Prompt created by {props.currentUser && props.currentUser.displayName}</p>
             <p className="post-body">{post.body && post.body}</p>
             <a className="post-page-btn post-back-btn" onClick={() => props.setPage("home")}>Back Home</a>
             <section className="post-comments">
                 {props.currentUser ? <section className="comment-input-container">
-                    <input onChange={handleCommentInputChange} name="author" className="comment-author-input" placeholder="Name" />
-                    <input onChange={handleCommentInputChange} name="body" className="comment-body-input" placeholder="Comments" />
+                    <textarea onChange={handleCommentInputChange} name="body" className="comment-body-input" placeholder="Comments" />
                     <button onClick={handleCommentSubmit} type="button" className="comment-submit-btn post-page-btn">Submit</button>
                 </section> : <p className="comment-notification">You must be logged in to add comments. <span className="comment-login-btn" onClick={() => props.setPage("login")}>Log In</span></p>}
                 <p className="comments-title">Comments</p>

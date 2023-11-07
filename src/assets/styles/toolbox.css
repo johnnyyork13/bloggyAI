@@ -1,0 +1,12 @@
+.toolbox-container {
+    width: 500px;
+    height: 50px;
+    margin-bottom: 5px;
+    background-color: var(--three);
+    display: flex;
+}
+
+.toolbox-btn {
+    border: 1px solid black;
+    cursor: pointer;
+}

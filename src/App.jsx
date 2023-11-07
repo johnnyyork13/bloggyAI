@@ -12,14 +12,13 @@ import PostCard from './components/PostCard';
 
 function App() {
 
-  const [post, setPost] = React.useState({});
+  const [currentPost, setCurrentPost] = React.useState({});
   const [page, setPage] = React.useState("home");
   const [currentUser, setCurrentUser] = React.useState(null)
-  
-  //console.log(currentUser);
+  const [getRes, setGetRes] = React.useState(null);
 
-  async function handleFormSubmit(e, data, url) {
-    setPage("home");
+  async function handleAddPostFormSubmit(e, data, url) {
+    console.log(data);
     e.preventDefault();
     try {
       await fetch(url, {
@@ -29,7 +28,9 @@ function App() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data)
-      })
+      }).then((res) => res.json())
+      .then((data) => setGetRes(data))
+      .then(() => setPage("home"));
     } catch(err) {
       console.log(err);
     }
@@ -46,7 +47,7 @@ function App() {
         {page === "home" && 
           <PostCardContainer 
             setPage={setPage}
-            setPost={setPost}
+            setCurrentPost={setCurrentPost}
             header={"Recent Posts"}
         />}
         {page === "login" &&
@@ -58,13 +59,13 @@ function App() {
         {page === "post" && 
           <Post 
             currentUser={currentUser}
-            post={post}
+            currentPost={currentPost}
             setPage={setPage}
           />}
         {page === "addPost" &&
           <AddPostForm
             currentUser={currentUser}
-            handleFormSubmit={handleFormSubmit}
+            handleAddPostFormSubmit={handleAddPostFormSubmit}
           />
         }
         {page === "signup" &&

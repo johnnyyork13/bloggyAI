@@ -4,7 +4,7 @@ export default function PostCard(props) {
 
     function handlePostCardClick() {
         props.setPage("post");
-        props.setPost(props.post);
+        props.setCurrentPost(props.post);
     }
 
     //console.log(props.post._id);

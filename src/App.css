@@ -12,6 +12,7 @@ html {
     --nineFifty: #451a03;
     --textLight: #fffbeb;
     --textDark: #451a03;
+    font-family:'Times New Roman', Times, serif !important;
 }
 
 body {

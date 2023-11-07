@@ -15,7 +15,7 @@ export default function Header(props) {
 
     return (
         <header>
-            <p onClick={() => props.setPage("home")}>Bloggy</p>
+            <p onClick={() => props.setPage("home")}>BloggyAI</p>
             <nav className="link-container">
                 {props.currentUser && <a onClick={() => props.setPage("addPost")}>Add Post</a>}
                 {props.currentUser && 

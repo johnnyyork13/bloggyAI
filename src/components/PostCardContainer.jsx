@@ -27,7 +27,7 @@ export default function PostCardContainer(props) {
                                 key={uuidv4()} 
                                 post={post} 
                                 setPage={props.setPage}
-                                setPost={props.setPost}
+                                setCurrentPost={props.setCurrentPost}
                             />)
     })
 
