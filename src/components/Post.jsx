@@ -1,6 +1,5 @@
 import React from 'react';
 import Comment from './Comment';
-
 import {v4 as uuidv4} from 'uuid'; 
 
 export default function Post(props) {
@@ -26,7 +25,7 @@ export default function Post(props) {
             }
         }
         getPost();
-    }, []);
+    }, [sendComment]);
 
     React.useEffect(() => {
         const url = `http://localhost:3000/blog/post/${props.currentPost._id}/delete`;
@@ -91,7 +90,7 @@ export default function Post(props) {
         setSendComment(true);
     }
 
-    const mappedComments = post.comments && post.comments.map((comment, index) => {
+    const mappedComments = (post && post.comments) && post.comments.map((comment, index) => {
         return <Comment 
             key={uuidv4()}
             isOdd={index % 2 === 0 ? false : true}
@@ -99,22 +98,44 @@ export default function Post(props) {
         />
     })
 
-    console.log(sendComment);
+    const mappedTags = (post && post.tags) && post.tags.map((tag, index) => {
+        return <span className="tag">{tag}{index < post.tags.length - 1 ? "," : ""}</span>
+    })
+
     return (   
         <section className="post">
-            {props.currentUser && props.currentUser.username === post.author && <a className="post-page-btn post-delete-btn" onClick={() => setDeletePost(true)}>Delete Post</a>}
-            <h1>{post.title && post.title}</h1>
-            <p>Prompt created by {props.currentUser && props.currentUser.displayName}</p>
+            <section className="post-title">
+                <p className="post-title-header">
+                    {post.title && post.title}
+                </p>
+                {props.currentUser &&
+                    props.currentUser.username === post.author &&
+                        <a className="post-delete-btn"
+                            onClick={() => setDeletePost(true)}
+                        >Delete Post</a>}
+            </section>
+            <p className="post-title-sub">Prompt created by <span className="post-title-sub-author">{post.author}</span></p>
             <p className="post-body">{post.body && post.body}</p>
-            <a className="post-page-btn post-back-btn" onClick={() => props.setPage("home")}>Back Home</a>
+            <p className="post-tags">Tags: {mappedTags}</p>
+            <a className="post-page-btn post-back-btn" 
+                onClick={() => props.setPage("home")}
+            >Back Home</a>
             <section className="post-comments">
                 {props.currentUser ? <section className="comment-input-container">
-                    <textarea onChange={handleCommentInputChange} name="body" className="comment-body-input" placeholder="Comments" />
-                    <button onClick={handleCommentSubmit} type="button" className="comment-submit-btn post-page-btn">Submit</button>
-                </section> : <p className="comment-notification">You must be logged in to add comments. <span className="comment-login-btn" onClick={() => props.setPage("login")}>Log In</span></p>}
+                    <textarea 
+                        onChange={handleCommentInputChange} 
+                        name="body" 
+                        className="comment-body-input" 
+                        placeholder="Comments" />
+                    <button 
+                        onClick={handleCommentSubmit} 
+                        type="button" 
+                        className="comment-submit-btn post-page-btn"
+                    >Submit</button>
+                </section> : <p className="comment-login-notification">You must be logged in to add comments. <span className="comment-login-btn" onClick={() => props.setPage("login")}>Log In</span></p>}
                 <p className="comments-title">Comments</p>
                 {post.comments && post.comments.length === 0 ?
-                    "Be the first to comment:" : 
+                    <p className="comment-first-notification">Be the first to comment.</p> : 
                     mappedComments}
             </section>
         </section>

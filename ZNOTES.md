@@ -12,6 +12,7 @@ SCHEMA
         body: STRING,
         author: STRING,
         date: DATE OBJ,
+        votes: NUMBER,
         comments: [
             date: DATE OBJ,
             author: STRING,

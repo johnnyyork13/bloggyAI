@@ -23,6 +23,7 @@
     box-shadow: 0 0 5px var(--three);
     text-align: center;
     padding: 10px;
+    color: var(--textDark);
 }
 
 .post-card-container:hover {
@@ -109,14 +110,52 @@
     align-items: center;
 }
 
-.post h1 {
+.post-title {
+    width: 80%;
+    height: 40px;
+    background-color: var(--eight);
+    font-weight: bolder;
+    margin: 25px;
+    color: var(--textLight);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: relative;
+}
+
+.post-title-header {
+    font-size: clamp(.9rem, 3.5vw, 1.5rem);
+    width: 100%;
     text-align: center;
 }
 
 .post-delete-btn {
     position: absolute;
-    right: 0;
-    top: 20px;
+    right: 0px;
+    top: 0;
+    width: 100px;
+    align-items: center;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-delete-btn:hover {
+    cursor: pointer;
+    color: var(--five);
+}
+
+.post-title-sub {
+    color: var(--textDark);
+    font-size: 1rem;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.post-title-sub-author {
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 .post-body {
@@ -127,12 +166,15 @@
 
 .post-back-btn {
     align-self: center;
+    margin-top: 40px;
     margin-bottom: 50px;
 }
 
 .post-page-btn  {
     background-color: var(--eight);
     padding: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
     color: var(--textLight);
     font-weight: bolder;
     border: 2px solid var(--nine);
@@ -148,7 +190,7 @@
     width: 100%;
     display: grid;
     grid-auto-rows: fit-content;
-    gap: 5px;
+    gap: 10px;
     grid-template-columns: 1fr;
     margin-bottom: 50px;
 }
@@ -159,10 +201,15 @@
     align-items: center;
 }
 
-.comment-notification {
+.comment-login-notification {
     font-size: 1.3rem;
     color: var(--textDark);
     text-align: center;
+}
+
+.comment-first-notification {
+    text-align: center;
+    color: var(--textDark);
 }
 
 .comment-login-btn:hover {
@@ -172,6 +219,7 @@
 
 .comments-title {
     text-align: center;
+    text-decoration: underline;
     font-weight: bolder;
     color: var(--textDark);
     font-size: 1.2rem;
@@ -195,10 +243,19 @@
     width: 10%;
     height: 60px;
     box-sizing: border-box;
+    font-size: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .comment-container {
-    padding: 15px;
+    padding: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    font-size: 1rem;
+    color: var(--textDark);
+    /* box-shadow: 2px 2px .2rem var(--two); */
 }
 
 .comment-left {
@@ -209,4 +266,9 @@
 .comment-right {
     background-color: var(--fifty);
     text-align: right;
+}
+
+.comment-author {
+    text-decoration: underline;
+    font-weight: bold;
 }
