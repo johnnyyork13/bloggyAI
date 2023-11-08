@@ -1,6 +1,9 @@
 import React from 'react';
 import Comment from './Comment';
 import {v4 as uuidv4} from 'uuid'; 
+import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
+import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Post(props) {
 
@@ -12,18 +15,20 @@ export default function Post(props) {
         date: ""
     });
     const [sendComment, setSendComment] = React.useState(false);
+    const [likedPost, setLikedPost] = React.useState(null);
+
+    async function getPost() {
+        try {
+            const url = `http://localhost:3000/blog/post/${props.currentPost._id}`;
+            await fetch(url)
+            .then((res) => res.json())
+            .then((data) => setPost(data));
+        } catch(err) {
+            console.log(err);
+        }
+    }
 
     React.useEffect(() => {
-        const url = `http://localhost:3000/blog/post/${props.currentPost._id}`;
-        async function getPost() {
-            try {
-                await fetch(url)
-                .then((res) => res.json())
-                .then((data) => setPost(data));
-            } catch(err) {
-                console.log(err);
-            }
-        }
         getPost();
     }, [sendComment]);
 
@@ -74,6 +79,36 @@ export default function Post(props) {
         addComment();
     }, [sendComment])
 
+    React.useEffect(() => {
+        try {
+            if (likedPost !== null) {
+                const url = `http://localhost:3000/blog/user/votePost`;
+                async function votePost() {
+                    await fetch(url, {
+                        method: "POST",
+                        mode: "cors",
+                        headers: {
+                            "Content-Type":"application/json",
+                        },
+                        body: JSON.stringify({
+                            likedPost: likedPost,
+                            postID: props.currentPost._id,
+                            userID: props.currentUser.username
+                        })
+                    }).then((res) => res.json())
+                    .then((post) => {
+                        setLikedPost(null); 
+                        setPost(post.post)
+                        getPost()
+                    })
+                }
+                votePost();    
+            }
+        } catch(err) {
+            console.log(err);
+        }
+    },  [likedPost])
+
     function handleCommentInputChange(e) {
         setComment((prev) => ({
             ...prev,
@@ -90,6 +125,14 @@ export default function Post(props) {
         setSendComment(true);
     }
 
+    function handleLikeButtonClick(val) {
+        if (!props.currentUser) {
+            props.setModalBackground(true);
+        } else {
+            setLikedPost(val);
+        }
+    }
+
     const mappedComments = (post && post.comments) && post.comments.map((comment, index) => {
         return <Comment 
             key={uuidv4()}
@@ -99,14 +142,27 @@ export default function Post(props) {
     })
 
     const mappedTags = (post && post.tags) && post.tags.map((tag, index) => {
-        return <span className="tag">{tag}{index < post.tags.length - 1 ? "," : ""}</span>
+        return <span 
+                    key={uuidv4()}
+                    className="tag">
+                    {tag}{index < post.tags.length - 1 ? "," : ""}
+                </span>
     })
 
     return (   
         <section className="post">
             <section className="post-title">
+                <p className="post-likes">
+                    <div className="post-likes-count">
+                        <FavoriteIcon />{post.likes}
+                    </div>
+                    <div className="post-likes-icons">
+                        <button onClick={() => handleLikeButtonClick(false)}><ThumbDownAltOutlinedIcon /></button>
+                        <button onClick={() => handleLikeButtonClick(true)}><ThumbUpAltOutlinedIcon /></button>
+                    </div>
+                </p>
                 <p className="post-title-header">
-                    {post.title && post.title}
+                    {(post && post.title) && post.title}
                 </p>
                 {props.currentUser &&
                     props.currentUser.username === post.author &&
@@ -115,7 +171,7 @@ export default function Post(props) {
                         >Delete Post</a>}
             </section>
             <p className="post-title-sub">Prompt created by <span className="post-title-sub-author">{post.author}</span></p>
-            <p className="post-body">{post.body && post.body}</p>
+            <p className="post-body">{(post && post.body) && post.body}</p>
             <p className="post-tags">Tags: {mappedTags}</p>
             <a className="post-page-btn post-back-btn" 
                 onClick={() => props.setPage("home")}

@@ -35,7 +35,7 @@ export default function Header(props) {
                     <div className="header-dropdown-menu" onClick={handleOpenDropdown}>
                         {props.currentUser.displayName} <span className="dropdown-arrow"></span>
                         <div className={`header-dropdown ${props.openDropdown ? "open-dropdown" : "close-dropdown"}`}>
-                            <a>My Posts</a>
+                            <a onClick={() => props.setPage("profile")}>My Posts</a>
                             <a onClick={() => props.setPage("search")}>Browse</a>
                             <a onClick={() => {
                                 props.setPage("home");

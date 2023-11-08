@@ -1,3 +1,8 @@
+TODO
+Set timeout for OpenAI API call fail
+Add limit on post title length
+style login modal for post when user not logged in
+
 SCHEMA
     USER {
         username: STRING,
@@ -5,6 +10,12 @@ SCHEMA
         displayName: STRING,
         email: STRING
         membership: enum["user", "admin"],
+        likedPosts: [
+            {
+                postID: _id,
+                liked: BOOLEAN    
+            }
+        ]
     }
 
     POST {
@@ -18,6 +29,7 @@ SCHEMA
             author: STRING,
             body: STRING
         ],
+        likes: NUMBER,
         tags: STRING
     }
 

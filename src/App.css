@@ -13,6 +13,7 @@ html {
     --textLight: #fffbeb;
     --textDark: #451a03;
     font-family:'Times New Roman', Times, serif !important;
+    --globalWidth: 75%;
 }
 
 body {
@@ -181,7 +182,7 @@ nav a:hover {
 }
 
 main {
-    width: clamp(430px, 65%, 65%);
+    width: clamp(430px, var(--globalWidth), var(--globalWidth));
     display: flex;
     justify-content: center;
 }

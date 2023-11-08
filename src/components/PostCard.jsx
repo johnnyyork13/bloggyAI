@@ -12,7 +12,7 @@ export default function PostCard(props) {
     return (
         <section className="post-card-container" onClick={handlePostCardClick}>
             <p className="post-card-title">{props.post.title}</p>
-            <p className="post-card-body">{props.post.body}</p>
+            <p className="post-card-body">{props.post.body}...</p>
         </section>
     )
 }

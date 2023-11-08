@@ -123,9 +123,43 @@
     position: relative;
 }
 
+.post-likes {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    left: 5px;
+    width: 150px;
+    font-size: 1.2rem;
+    color: var(--textLight);
+}
+
+.post-likes-count {
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.post-likes-icons {
+    color: blue;
+    width: 50%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.post-likes-icons button {
+    background-color: var(--eight);
+    border: none;
+    color: var(--textLight);
+}
+
 .post-title-header {
-    font-size: clamp(.9rem, 3.5vw, 1.5rem);
+    font-size: clamp(.1rem, 1rem, 1.5rem) !important;
     width: 100%;
+    margin-left: 150px;
+    margin-right: 150px;
     text-align: center;
 }
 
@@ -159,9 +193,19 @@
 }
 
 .post-body {
-    width: 75%;
+    width: var(--globalWidth);
     white-space: pre-wrap;
     font-size: 1.3rem;
+}
+
+.post-tags {
+    width: var(--globalWidth);
+    text-align: left;
+    cursor: pointer;
+}
+
+.tag {
+    text-decoration: underline;
 }
 
 .post-back-btn {

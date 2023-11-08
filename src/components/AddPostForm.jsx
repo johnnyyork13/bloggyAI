@@ -27,9 +27,14 @@ export default function AddPostForm(props) {
                         body: JSON.stringify(requestBody)
                     }).then((res) => res.json())
                     .then((post) => {
-                        props.setCurrentPost({_id: post._id});
                         props.setModalBackground(false);
-                        props.setPage("post");
+                        if (!res !== "fail") {
+                            props.setCurrentPost({_id: post._id});
+                            props.setPage("post");
+                        }
+                    }).catch((err) => {
+                        props.setModalBackground(false);
+                        alert("OpenAI Server Error: Please Try Again Later (503)");
                     });
                 }
                 addPost();
@@ -62,7 +67,12 @@ export default function AddPostForm(props) {
         <section className="add-post-form-container">
             <h2>Create Post</h2>
             <form>
-                <input className="add-post-input add-post-title" type="text" name="title" onChange={handleAddFormInputChange} placeholder='Prompt Name' />
+                <input 
+                    className="add-post-input add-post-title" 
+                    type="text" name="title" 
+                    onChange={handleAddFormInputChange} 
+                    value={post.title}
+                    placeholder='Prompt Name' />
                 <section className="add-post-body-input-wrapper">
                     <span className="add-post-body-input-default-text">Write a blog post about </span>
                     <textarea 
@@ -70,10 +80,17 @@ export default function AddPostForm(props) {
                         type="text" 
                         name="body" 
                         onChange={handleAddFormInputChange} 
+                        value={post.body}
                         placeholder='an adventure climbing Mount Everest.'
                     ></textarea>
                 </section>
-                <input className="add-post-input add-post-tags" type="text" name="tags" onChange={handleAddFormInputChange} placeholder='Tags (Separate with commas)'/>
+                <input 
+                    className="add-post-input add-post-tags" 
+                    type="text" 
+                    name="tags" 
+                    onChange={handleAddFormInputChange} 
+                    value={post.tags}
+                    placeholder='Tags (Separate with commas)'/>
                 <button 
                     className="add-post-submit-btn form-btn" 
                     type="submit" onClick={handleFormSubmit}
