@@ -4,7 +4,7 @@ export default function Header(props) {
 
     async function handleLogout() {
         try {
-            const url = "http://localhost:3000/blog/user/logout";
+            const url = props.root + "/user/logout";
             await fetch(url)
             .then((res) => res.json())
             .then((res) => console.log(res));

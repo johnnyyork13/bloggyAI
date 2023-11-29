@@ -13,7 +13,7 @@ export default function AddPostForm(props) {
     const [requestBody, setRequestBody] = React.useState(null);
 
     React.useEffect(() => {
-        const url = `http://localhost:3000/gpt/prompt`;
+        const url = props.root + `/gpt/prompt`;
         if (requestBody) {
             try {
                 async function addPost() {

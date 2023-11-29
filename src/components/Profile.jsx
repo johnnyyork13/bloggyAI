@@ -9,7 +9,7 @@ export default function Profile(props) {
 
     React.useEffect(() => {
         try {
-            const url = `http://localhost:3000/blog/user/${props.currentUser.username}/posts`;
+            const url = props.root + `/${props.currentUser.username}/posts`;
             async function getUserPosts() {
                 await fetch(url)
                 .then((res) => res.json())

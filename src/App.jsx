@@ -21,6 +21,8 @@ function App() {
   const [openDropdown, setOpenDropdown] = React.useState(false);
   const [modalBackground, setModalBackground] = React.useState(false);
 
+  const root = "https://aged-sound-426.fly.dev/blog";
+
   React.useEffect(() => {
     setOpenDropdown(false);
   }, [page])
@@ -51,6 +53,7 @@ function App() {
           </div>
       }
       {<Header
+        root={root}
         setPage={setPage}
         setCurrentUser={setCurrentUser}
         currentUser={currentUser}
@@ -60,18 +63,21 @@ function App() {
       <main>
         {page === "home" && 
           <PostCardContainer 
+            root={root}
             setPage={setPage}
             setCurrentPost={setCurrentPost}
             header={"Recent Posts"}
         />}
         {page === "login" &&
           <Login 
+            root={root}
             setPage={setPage}
             setCurrentUser={setCurrentUser}
           />
         }
         {page === "post" && 
           <Post 
+            root={root}
             currentUser={currentUser}
             currentPost={currentPost}
             setModalBackground={setModalBackground}
@@ -79,6 +85,7 @@ function App() {
           />}
         {page === "addPost" &&
           <AddPostForm
+            root={root}
             currentUser={currentUser}
             setPage={setPage}
             setCurrentPost={setCurrentPost}
@@ -88,18 +95,20 @@ function App() {
         }
         {page === "signup" &&
           <SignUp 
+            root={root}
             setPage={setPage}
           />
         }
         {
           page === "search" &&
           <SearchPosts 
-          
+            root={root}
           />
         }
         {
           page === "profile" &&
           <Profile 
+            root={root}
             currentUser={currentUser}
             setPage={setPage}
             setCurrentPost={setCurrentPost}

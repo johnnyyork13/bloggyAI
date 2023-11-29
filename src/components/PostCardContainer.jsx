@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function PostCardContainer(props) {
 
-    const url = "http://localhost:3000/blog/posts/"
+    const url = props.root + "/posts/"
 
     const [postList, setPostList] = React.useState([]);
 

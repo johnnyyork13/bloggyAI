@@ -18,7 +18,7 @@ export default function SignUp(props) {
     }
 
     async function handleSignUp(e) {
-        const url = "http://localhost:3000/blog/user/add";
+        const url = props.root + "/user/add";
         try {
             await fetch(url, {
                 method: "POST",

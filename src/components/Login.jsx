@@ -13,7 +13,8 @@ export default function Login(props) {
     }
 
     async function handleLogin(e) {
-        const url = "http://localhost:3000/blog/user/login";
+        const url = props.root + "/user/login";
+        console.log(url);
         e.preventDefault();
         try {
           await fetch(url, {

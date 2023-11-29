@@ -19,7 +19,7 @@ export default function Post(props) {
 
     async function getPost() {
         try {
-            const url = `http://localhost:3000/blog/post/${props.currentPost._id}`;
+            const url = props.root + `/${props.currentPost._id}`;
             await fetch(url)
             .then((res) => res.json())
             .then((data) => setPost(data));
@@ -33,7 +33,7 @@ export default function Post(props) {
     }, [sendComment]);
 
     React.useEffect(() => {
-        const url = `http://localhost:3000/blog/post/${props.currentPost._id}/delete`;
+        const url = props.root + `/${props.currentPost._id}/delete`;
         async function handleDeletePost() {
             try {
                 if (deletePost) {
@@ -58,7 +58,7 @@ export default function Post(props) {
         async function addComment() {
             if (sendComment) {
                 try {
-                    const url = `http://localhost:3000/blog/post/${props.currentPost._id}/addComment`;
+                    const url = props.root + `/${props.currentPost._id}/addComment`;
                     await fetch(url, {
                         method: "POST",
                         mode: "cors",
@@ -82,7 +82,7 @@ export default function Post(props) {
     React.useEffect(() => {
         try {
             if (likedPost !== null) {
-                const url = `http://localhost:3000/blog/user/votePost`;
+                const url = props.root + "/user/votePost";
                 async function votePost() {
                     await fetch(url, {
                         method: "POST",

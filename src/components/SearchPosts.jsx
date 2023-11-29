@@ -13,7 +13,7 @@ export default function SearchPosts(props) {
 
     React.useEffect(() => {
         try {
-            const url = "http://localhost:3000/blog/posts/search"
+            const url = props.root;
             async function getPosts() {
                 await fetch(url)
                 .then((res) => res.json())
