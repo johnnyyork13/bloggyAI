@@ -22,8 +22,9 @@ function App() {
   const [modalBackground, setModalBackground] = React.useState(false);
 
   // const root = "https://aged-sound-426.fly.dev/blog";
-  const root = 'https://api-backend-28a77.web.app/blog';
-  // const root = "http://localhost:3000/blog";
+  // const root = 'https://api-backend-28a77.web.app/blog';
+  const root = 'https://us-central1-api-backend-28a77.cloudfunctions.net/api';
+  // const root = "http://localhost:3000";
 
   React.useEffect(() => {
     setOpenDropdown(false);
