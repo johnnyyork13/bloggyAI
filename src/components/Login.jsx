@@ -24,7 +24,7 @@ export default function Login(props) {
             headers: {
               "Content-Type":"application/json",
               'Accept': 'application/json',
-              'Access-Control-Allow-Origin': 'https://johnnyyork13.github.io'
+              'Access-Control-Allow-Origin': 'johnnyyork13.github.io'
             },
             body: JSON.stringify(user)
           }).then((res) => res.json())
