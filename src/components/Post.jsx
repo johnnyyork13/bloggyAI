@@ -7,7 +7,13 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Post(props) {
 
-    const [post, setPost] = React.useState({});
+    const [post, setPost] = React.useState({
+        title: "",
+        body: "",
+        author: "",
+        tags: [],
+        comments: "",
+    });
     const [deletePost, setDeletePost] = React.useState(false);
     const [comment, setComment] = React.useState({
         author: "",
@@ -15,7 +21,8 @@ export default function Post(props) {
         date: ""
     });
     const [sendComment, setSendComment] = React.useState(false);
-    const [likedPost, setLikedPost] = React.useState(null);
+    const [likedPost, setLikedPost] = React.useState(false);
+    const [render, setRender] = React.useState(false);
 
     async function getPost() {
         try {
@@ -30,7 +37,7 @@ export default function Post(props) {
 
     React.useEffect(() => {
         getPost();
-    }, [sendComment]);
+    }, [sendComment, render]);
 
     React.useEffect(() => {
         const url = props.root + `/post/${props.currentPost._id}/delete`;
@@ -62,6 +69,7 @@ export default function Post(props) {
                     await fetch(url, {
                         method: "POST",
                         mode: "cors",
+                        credentials: 'include',
                         headers: {
                             "Content-Type":"application/json",
                         },
@@ -87,6 +95,7 @@ export default function Post(props) {
                     await fetch(url, {
                         method: "POST",
                         mode: "cors",
+                        credentials: 'include',
                         headers: {
                             "Content-Type":"application/json",
                         },
@@ -96,10 +105,8 @@ export default function Post(props) {
                             userID: props.currentUser.username
                         })
                     }).then((res) => res.json())
-                    .then((post) => {
-                        setLikedPost(null); 
-                        setPost(post.post)
-                        getPost()
+                    .then(() => {
+                        setRender((prev) => !prev); 
                     })
                 }
                 votePost();    
@@ -154,7 +161,7 @@ export default function Post(props) {
             <section className="post-title">
                 <p className="post-likes">
                     <div className="post-likes-count">
-                        <FavoriteIcon />{post.likes}
+                        <FavoriteIcon />{(post && post.likes) && post.likes}
                     </div>
                     <div className="post-likes-icons">
                         <button onClick={() => handleLikeButtonClick(false)}><ThumbDownAltOutlinedIcon /></button>
@@ -164,7 +171,7 @@ export default function Post(props) {
                 <p className="post-title-header">
                     {(post && post.title) && post.title}
                 </p>
-                {props.currentUser &&
+                {(props.currentUser && post && post.author) &&
                     props.currentUser.username === post.author &&
                         <a className="post-delete-btn"
                             onClick={() => setDeletePost(true)}

@@ -23,8 +23,8 @@ export default function Login(props) {
             credentials: "include",
             headers: {
               "Content-Type":"application/json",
-              'Accept': 'application/json',
-              'Access-Control-Allow-Origin': 'johnnyyork13.github.io'
+              // 'Accept': 'application/json',
+              // 'Access-Control-Allow-Origin': 'johnnyyork13.github.io'
             },
             body: JSON.stringify(user)
           }).then((res) => res.json())
@@ -47,7 +47,7 @@ export default function Login(props) {
 
     return (
         <section className="login-container">
-            <p className="login-container-header">Login (v2)</p>
+            <p className="login-container-header">Login (v5)</p>
             <form>
                 <input className="login-input" onChange={handleInputChange} type="text" name="username" placeholder="Username" suggested="current-login"/>
                 <input className="login-input" onChange={handleInputChange} type="password" name="password" placeholder="Password" suggested="current-password"/>

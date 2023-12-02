@@ -21,6 +21,7 @@ export default function AddPostForm(props) {
                     await fetch(url, {
                         method: "POST",
                         mode: "cors",
+                        credentials: 'include',
                         headers: {
                         "Content-Type": "application/json",
                         },
@@ -28,12 +29,11 @@ export default function AddPostForm(props) {
                     }).then((res) => res.json())
                     .then((post) => {
                         props.setModalBackground(false);
-                        if (!res !== "fail") {
-                            props.setCurrentPost({_id: post._id});
-                            props.setPage("post");
-                        }
+                        props.setCurrentPost({_id: post._id});
+                        props.setPage("post");
                     }).catch((err) => {
                         props.setModalBackground(false);
+                        console.log(err);
                         alert("OpenAI Server Error: Please Try Again Later (503)");
                     });
                 }
