@@ -23,6 +23,7 @@ export default function SignUp(props) {
             await fetch(url, {
                 method: "POST",
                 mode: "cors",
+                credentials: 'include',
                 headers: {
                     "Content-Type":"application/json",
                 },

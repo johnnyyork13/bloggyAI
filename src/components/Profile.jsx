@@ -11,7 +11,9 @@ export default function Profile(props) {
         try {
             const url = props.root + `/user/${props.currentUser.username}/posts`;
             async function getUserPosts() {
-                await fetch(url)
+                await fetch(url, {
+                    credentials: 'include',
+                })
                 .then((res) => res.json())
                 .then((posts) => setUserPosts(posts.postList))
                 .catch((err) => console.log(err));

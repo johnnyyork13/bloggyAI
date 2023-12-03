@@ -12,7 +12,9 @@ export default function PostCardContainer(props) {
     React.useEffect(() => {
         async function getPosts(url) {
             try {
-                await fetch(url)
+                await fetch(url, {
+                    credentials: 'include',
+                })
                 .then((res) => res.json())
                 .then((data) => setPostList(data));
             } catch(err) {

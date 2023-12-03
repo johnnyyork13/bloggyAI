@@ -5,7 +5,9 @@ export default function Header(props) {
     async function handleLogout() {
         try {
             const url = props.root + "/user/logout";
-            await fetch(url)
+            await fetch(url, {
+                credentials: 'include',
+            })
             .then((res) => res.json())
             .then((res) => console.log(res));
         } catch(err) {

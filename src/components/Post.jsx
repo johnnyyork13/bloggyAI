@@ -6,6 +6,7 @@ import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Post(props) {
+    //console.log(props.currentUser);
 
     const [post, setPost] = React.useState({
         title: "",
@@ -21,13 +22,15 @@ export default function Post(props) {
         date: ""
     });
     const [sendComment, setSendComment] = React.useState(false);
-    const [likedPost, setLikedPost] = React.useState(false);
+    const [likedPost, setLikedPost] = React.useState(null);
     const [render, setRender] = React.useState(false);
 
     async function getPost() {
         try {
             const url = props.root + `/post/${props.currentPost._id}`;
-            await fetch(url)
+            await fetch(url, {
+                credentials: 'include',
+            })
             .then((res) => res.json())
             .then((data) => setPost(data));
         } catch(err) {
@@ -47,6 +50,7 @@ export default function Post(props) {
                     await fetch(url, {
                         method: "POST",
                         mode: "cors",
+                        credentials: 'include',
                         headers: {
                             "Content-Type": "application/json"
                         },
@@ -102,7 +106,7 @@ export default function Post(props) {
                         body: JSON.stringify({
                             likedPost: likedPost,
                             postID: props.currentPost._id,
-                            userID: props.currentUser.username
+                            userID: props.currentUser._id,
                         })
                     }).then((res) => res.json())
                     .then(() => {
@@ -159,7 +163,7 @@ export default function Post(props) {
     return (   
         <section className="post">
             <section className="post-title">
-                <p className="post-likes">
+                <div className="post-likes">
                     <div className="post-likes-count">
                         <FavoriteIcon />{(post && post.likes) && post.likes}
                     </div>
@@ -167,7 +171,7 @@ export default function Post(props) {
                         <button onClick={() => handleLikeButtonClick(false)}><ThumbDownAltOutlinedIcon /></button>
                         <button onClick={() => handleLikeButtonClick(true)}><ThumbUpAltOutlinedIcon /></button>
                     </div>
-                </p>
+                </div>
                 <p className="post-title-header">
                     {(post && post.title) && post.title}
                 </p>

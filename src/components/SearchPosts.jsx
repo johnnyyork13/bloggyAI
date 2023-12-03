@@ -15,7 +15,9 @@ export default function SearchPosts(props) {
         try {
             const url = props.root;
             async function getPosts() {
-                await fetch(url)
+                await fetch(url, {
+                    credentials: 'include',
+                })
                 .then((res) => res.json())
                 .then((posts) => setPostList([
                     ...posts.postList
