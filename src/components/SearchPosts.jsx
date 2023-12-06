@@ -1,27 +1,24 @@
 import React from 'react';
-import '../assets/styles/search.css';
 import PostCardContainer from './PostCardContainer';
+import {v4 as uuidv4} from 'uuid';
 
 export default function SearchPosts(props) {
 
-    const [postList, setPostList] = React.useState([])
     const [searchList, setSearchList] = React.useState([])
-    const [search, setSearch] = React.useState({
-        title: "",
-        tags: ""
-    })
+    const [searchResults, setSearchResults] = React.useState([])
 
     React.useEffect(() => {
         try {
-            const url = props.root;
+            const url = props.root + '/posts/search';
             async function getPosts() {
-                await fetch(url, {
-                    credentials: 'include',
-                })
+                await fetch(url)
                 .then((res) => res.json())
-                .then((posts) => setPostList([
+                .then((posts) => setSearchList([
                     ...posts.postList
-                ]));
+                ]))
+                .catch((err) => {
+                    console.log(err);
+                });
             }
             getPosts();
         } catch(err) {
@@ -29,58 +26,41 @@ export default function SearchPosts(props) {
         }
     }, [])
 
-    React.useEffect(() => {
-        if (postList.length > 0) {
-            try {
-                setSearchList(() => {
-                    const list = postList.filter(function(post){
-                        const lowerTitle = post.title.toLowerCase();
-                        const lowerQuery = search.query.toLowerCase();
-                        const lowerTags = search.tags.split(",").map((tag) => tag.toLowerCase()).join(",");
-                        if (lowerTitle.startsWith(lowerQuery) ||
-                            post.tags.includes(lowerTags)) {
-                            return post;
-                        }
-                    });
-                    //console.log(list);
-                    return list;
-                })
-            } catch(err) {
-                console.log(err);
-            }
-        }
-    }, [search])
-
     function handleSearchInputChange(e) {
-        setSearch((prev) => ({
-            ...prev,
-            [e.target.name]: e.target.value
-        }))
+        setSearchResults(() => {
+            return searchList.filter((post) => {
+                const search = e.target.value.toLowerCase();
+                const tags = post.tags.map((tag) => tag.trim().toLowerCase());
+                const title = post.title.toLowerCase();
+                return (title.includes(search) ||
+                        tags.includes(search)) && post;
+            }).slice(0, 10);
+        })
     }
 
-    //console.log("SEARCH", searchList[0]);
-
-    const mappedPosts = searchList.map((post) => {
-        return <p>{post.title}</p>
+    const mappedSearchResults = searchResults.map((post) => {
+        return <a 
+                key={uuidv4()}
+                onClick={() => {
+                    props.setCurrentPost(post);
+                    props.setPage("post");
+                }}
+                className="search-result">
+                {post.title} <p>(tags: {post.tags.join(",")})</p>
+            </a>
     })
 
     return (
         <section className="search-posts-container">
-            <p className="search-posts-header">Title Search</p>
             <input
                 className="search-input"
                 onChange={handleSearchInputChange} 
                 type="search" 
                 name="query" 
-                placeholder="Search for posts" />
-            or
-            <input
-                className="search-input"
-                onChange={handleSearchInputChange} 
-                type="search" 
-                name="query" 
-                placeholder="Search by keyword. (Seperate words with commas)" />
-            {mappedPosts}
+                placeholder="Search by Title, Keywords, or Tags" />
+            <section className="search-results-container">
+                {mappedSearchResults}
+            </section>
         </section>
     )
 }

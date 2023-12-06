@@ -50,7 +50,7 @@ export default function Login(props) {
             <p className="login-container-header">Login (v5)</p>
             <form>
                 <input className="login-input" onChange={handleInputChange} type="text" name="username" placeholder="Username" suggested="current-login"/>
-                <input className="login-input" onChange={handleInputChange} type="password" name="password" placeholder="Password" suggested="current-password"/>
+                <input className="login-input" onChange={handleInputChange} type="password" name="password" placeholder="Password" suggested="current-password" autoComplete='on'/>
                 <button className="login-btn post-page-btn" type="button" onClick={handleLogin}>Submit</button>
                 <p className="new-user-header">New User? <span onClick={() => props.setPage("signup")} className="create-blog-btn">Create a New Blog</span></p>
             </form>

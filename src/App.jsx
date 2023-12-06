@@ -17,7 +17,6 @@ function App() {
   const [currentPost, setCurrentPost] = React.useState({});
   const [page, setPage] = React.useState("home");
   const [currentUser, setCurrentUser] = React.useState(null)
-  const [getRes, setGetRes] = React.useState(null);
   const [openDropdown, setOpenDropdown] = React.useState(false);
   const [modalBackground, setModalBackground] = React.useState(false);
 
@@ -56,6 +55,7 @@ function App() {
       {<Header
         root={root}
         setPage={setPage}
+        setCurrentPost={setCurrentPost}
         setCurrentUser={setCurrentUser}
         currentUser={currentUser}
         setOpenDropdown={setOpenDropdown}
@@ -66,8 +66,8 @@ function App() {
           <PostCardContainer 
             root={root}
             setPage={setPage}
+            page={page}
             setCurrentPost={setCurrentPost}
-            header={"Recent Posts"}
         />}
         {page === "login" &&
           <Login 
@@ -81,6 +81,7 @@ function App() {
             root={root}
             currentUser={currentUser}
             currentPost={currentPost}
+            setCurrentUser={setCurrentUser}
             setModalBackground={setModalBackground}
             setPage={setPage}
           />}
@@ -101,17 +102,12 @@ function App() {
           />
         }
         {
-          page === "search" &&
-          <SearchPosts 
-            root={root}
-          />
-        }
-        {
           page === "profile" &&
           <Profile 
             root={root}
             currentUser={currentUser}
             setPage={setPage}
+            page={page}
             setCurrentPost={setCurrentPost}
           />
         }

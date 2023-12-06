@@ -13,7 +13,7 @@ export default function Post(props) {
         body: "",
         author: "",
         tags: [],
-        comments: "",
+        comments: [],
     });
     const [deletePost, setDeletePost] = React.useState(false);
     const [comment, setComment] = React.useState({
@@ -25,22 +25,21 @@ export default function Post(props) {
     const [likedPost, setLikedPost] = React.useState(null);
     const [render, setRender] = React.useState(false);
 
-    async function getPost() {
-        try {
-            const url = props.root + `/post/${props.currentPost._id}`;
-            await fetch(url, {
-                credentials: 'include',
-            })
-            .then((res) => res.json())
-            .then((data) => setPost(data));
-        } catch(err) {
-            console.log(err);
-        }
-    }
-
     React.useEffect(() => {
+        async function getPost() {
+            try {
+                const url = props.root + `/post/${props.currentPost._id}`;
+                await fetch(url, {
+                    credentials: 'include',
+                })
+                .then((res) => res.json())
+                .then((data) => setPost(data));
+            } catch(err) {
+                console.log(err);
+            }
+        }
         getPost();
-    }, [sendComment, render]);
+    }, [sendComment, render, props.currentPost]);
 
     React.useEffect(() => {
         const url = props.root + `/post/${props.currentPost._id}/delete`;
@@ -136,15 +135,15 @@ export default function Post(props) {
         setSendComment(true);
     }
 
-    function handleLikeButtonClick(val) {
+    function handleLikeButtonClick(bool) {
         if (!props.currentUser) {
             props.setModalBackground(true);
         } else {
-            setLikedPost(val);
+            setLikedPost(bool);
         }
     }
 
-    const mappedComments = (post && post.comments) && post.comments.map((comment, index) => {
+    const mappedComments = post.comments.map((comment, index) => {
         return <Comment 
             key={uuidv4()}
             isOdd={index % 2 === 0 ? false : true}
@@ -152,7 +151,7 @@ export default function Post(props) {
         />
     })
 
-    const mappedTags = (post && post.tags) && post.tags.map((tag, index) => {
+    const mappedTags = post.tags.map((tag, index) => {
         return <span 
                     key={uuidv4()}
                     className="tag">
@@ -165,7 +164,7 @@ export default function Post(props) {
             <section className="post-title">
                 <div className="post-likes">
                     <div className="post-likes-count">
-                        <FavoriteIcon />{(post && post.likes) && post.likes}
+                        <FavoriteIcon />{post.likes}
                     </div>
                     <div className="post-likes-icons">
                         <button onClick={() => handleLikeButtonClick(false)}><ThumbDownAltOutlinedIcon /></button>
@@ -173,16 +172,28 @@ export default function Post(props) {
                     </div>
                 </div>
                 <p className="post-title-header">
-                    {(post && post.title) && post.title}
+                    {post.title}
                 </p>
-                {(props.currentUser && post && post.author) &&
-                    props.currentUser.username === post.author &&
+                {(props.currentUser && 
+                    (props.currentUser.username === post.author || 
+                        props.currentUser.membership === "admin")) &&
                         <a className="post-delete-btn"
                             onClick={() => setDeletePost(true)}
                         >Delete Post</a>}
             </section>
-            <p className="post-title-sub">Prompt created by <span className="post-title-sub-author">{post.author}</span></p>
-            <p className="post-body">{(post && post.body) && post.body}</p>
+            <p className="post-title-sub">Prompt created by <a 
+                    onClick={() => {
+                        props.setCurrentUser((prev) => {
+                        return {
+                            ...prev, 
+                            visiting: post.author
+                        }});
+                        props.setPage("profile");
+                    }}
+                    className="post-title-sub-author"
+                >{post.author}</a>
+            </p>
+            <p className="post-body">{post.body}</p>
             <p className="post-tags">Tags: {mappedTags}</p>
             <a className="post-page-btn post-back-btn" 
                 onClick={() => props.setPage("home")}
@@ -201,7 +212,7 @@ export default function Post(props) {
                     >Submit</button>
                 </section> : <p className="comment-login-notification">You must be logged in to add comments. <span className="comment-login-btn" onClick={() => props.setPage("login")}>Log In</span></p>}
                 <p className="comments-title">Comments</p>
-                {post.comments && post.comments.length === 0 ?
+                {post.comments.length === 0 ?
                     <p className="comment-first-notification">Be the first to comment.</p> : 
                     mappedComments}
             </section>

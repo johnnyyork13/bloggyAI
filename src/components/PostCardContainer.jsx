@@ -7,7 +7,8 @@ export default function PostCardContainer(props) {
 
     const url = props.root + "/posts/"
 
-    const [postList, setPostList] = React.useState([]);
+    const [recentPosts, setRecentPosts] = React.useState([]);
+    const [topRatedPosts, setTopRatedPosts] = React.useState([]);
 
     React.useEffect(() => {
         async function getPosts(url) {
@@ -16,7 +17,10 @@ export default function PostCardContainer(props) {
                     credentials: 'include',
                 })
                 .then((res) => res.json())
-                .then((data) => setPostList(data));
+                .then((data) => {
+                    setRecentPosts(data.recentPosts);
+                    setTopRatedPosts(data.topRatedPosts);
+                });
             } catch(err) {
                 console.log(err);
             }
@@ -24,19 +28,39 @@ export default function PostCardContainer(props) {
         getPosts(url);
     }, []);
 
-    const mappedPosts = postList.map((post) => {
+
+    const mappedRecentPosts = recentPosts.map((post) => {
        return (post.title && <PostCard 
                                 key={uuidv4()} 
                                 post={post} 
                                 setPage={props.setPage}
+                                page={props.page}
                                 setCurrentPost={props.setCurrentPost}
                             />)
     })
 
+    const mappedTopRatedPosts = topRatedPosts.map((post) => {
+        return (post.title && <PostCard 
+            key={uuidv4()} 
+            post={post} 
+            setPage={props.setPage}
+            page={props.page}
+            setCurrentPost={props.setCurrentPost}
+        />)
+    })
+
     return (
         <section className="post-card-container-container">
-            <p className="post-card-container-container-header">{props.header}</p>
-            {mappedPosts.length > 0 ? mappedPosts : "No Posts to Show."}
+            <p className="post-card-container-container-header">New Posts</p>
+            <section className="post-card-container-section">
+                {mappedRecentPosts.length > 0 ? mappedRecentPosts : "No Posts to Show."}
+            </section>
+            <p className="more-recent-posts more-link">More</p>
+            <p className="post-card-container-container-header">Top Rated Posts</p>
+            <section className="post-card-container-section">
+                {mappedTopRatedPosts.length > 0 ? mappedTopRatedPosts : "No Posts to Show."}
+            </section>
+            <p className="more-top-rated-posts more-link">More</p>
         </section>
     )
 }

@@ -8,5 +8,54 @@
 .profile-body-container {
     width: 100%;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
+}
+
+.profile-post-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-post-section {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 170px);
+    gap: 20px;
+    overflow: auto;
+    max-height: 360px;
+    padding: 5px;
+}
+
+.profile-post-container-header {
+    font-size: 1.2rem;
+    font-weight: bolder;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-post-container-sub-header {
+    width: 100%;
+    border-bottom: 1px solid black;
+}
+
+.profile-sidebar {
+    text-align: right;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    margin-left: 100px;
+    max-height: 500px;
+    overflow: auto;
+}
+
+.profile-sidebar-header {
+    font-weight: bolder;
+    font-size: 1.1rem;
+}
+
+.profile-sidebar a {
+    text-decoration: underline;
+    cursor: pointer;
 }

@@ -65,7 +65,7 @@ export default function AddPostForm(props) {
     
     return (
         <section className="add-post-form-container">
-            <h2>Create Post</h2>
+            <h2>Generate Post</h2>
             <form>
                 <input 
                     className="add-post-input add-post-title" 

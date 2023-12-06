@@ -1,4 +1,5 @@
 import react from 'react-dom';
+import SearchPosts from './SearchPosts';
 
 export default function Header(props) {
 
@@ -16,13 +17,22 @@ export default function Header(props) {
     }
 
     function handleOpenDropdown(e){
-        e.stopPropagation();
-        props.setOpenDropdown(true);
+        if (props.openDropdown) {
+            props.setOpenDropdown(false);
+        } else {
+            e.stopPropagation();
+            props.setOpenDropdown(true);
+        }
     }
 
     return (
         <header>
             <p onClick={() => props.setPage("home")}>BloggyAI</p>
+            <SearchPosts 
+                root={props.root}
+                setPage={props.setPage}
+                setCurrentPost={props.setCurrentPost}
+            />
             <nav className="link-container">
                 {props.currentUser && <a onClick={() => props.setPage("addPost")}>
                     <span className="plus-symbol">{String.fromCharCode(43)}</span> Add Post
@@ -35,10 +45,18 @@ export default function Header(props) {
                     >Logout</a>} */}
                 {props.currentUser &&
                     <div className="header-dropdown-menu" onClick={handleOpenDropdown}>
-                        {props.currentUser.displayName} <span className="dropdown-arrow"></span>
+                        {props.currentUser.displayName}<span className="dropdown-arrow"></span>
                         <div className={`header-dropdown ${props.openDropdown ? "open-dropdown" : "close-dropdown"}`}>
-                            <a onClick={() => props.setPage("profile")}>My Posts</a>
-                            <a onClick={() => props.setPage("search")}>Browse</a>
+                            <a onClick={
+                                () => {props.setPage("profile")
+                                       props.setCurrentUser((prev) => {
+                                        return {
+                                            ...prev,
+                                            visiting: prev.username
+                                        }
+                                       })
+                                }
+                            }>My Posts</a>
                             <a onClick={() => {
                                 props.setPage("home");
                                 handleLogout();
