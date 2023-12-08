@@ -52,6 +52,11 @@
     gap: 20px;
 }
 
+.browse-results-no-posts {
+    width: 100%;
+    text-align: center;
+}
+
 .browse-tags-sidebar {
     grid-area: tagSidebar;
     display: flex;

@@ -1,20 +1,29 @@
-import react from 'react-dom';
+import React from 'react';
 import SearchBar from './SearchBar';
+import Modal from './Modal';
 
 export default function Header(props) {
 
-    async function handleLogout() {
-        try {
-            const url = props.root + "/user/logout";
-            await fetch(url, {
-                credentials: 'include',
-            })
-            .then((res) => res.json())
-            .then((res) => console.log(res));
-        } catch(err) {
-            console.log(err);
+    const [showModal, setShowModal] = React.useState(false);
+
+    React.useEffect(() => {
+        if (showModal) {
+            async function handleLogout() {
+                try {
+                    const url = props.root + "/user/logout";
+                    await fetch(url, {
+                        credentials: 'include',
+                    })
+                    .then((res) => res.json())
+                    .then((res) => console.log(res));
+                } catch(err) {
+                    console.log(err);
+                }
+            }
+            handleLogout();
         }
-    }
+    }, [showModal])
+
 
     function handleOpenDropdown(e){
         if (props.openDropdown) {
@@ -27,6 +36,12 @@ export default function Header(props) {
 
     return (
         <header>
+            {showModal && <Modal 
+                text="You Have Successfully Logged Out."
+                setPage={props.setPage}
+                setShowModal={setShowModal}
+                goToPage="home"
+            />} 
             <p onClick={() => props.setPage("home")}>BloggyAI</p>
             <SearchBar 
                 root={props.root}
@@ -63,8 +78,7 @@ export default function Header(props) {
                             <a>Help</a>
                             <a>About Bloggy</a>
                             <a onClick={() => {
-                                props.setPage("home");
-                                handleLogout();
+                                setShowModal(true);
                                 props.setCurrentUser(null)
                             }}>Logout</a>
                         </div>

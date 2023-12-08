@@ -5,43 +5,82 @@ import PostCard from '../components/PostCard';
 
 export default function Browse(props) {
 
-    const [tagsList, setTagsList] = React.useState([]);
+    const [popularTags, setPopularTags] = React.useState([]);
+    const [newTags, setNewTags] = React.useState([]);
     const [searchResults, setSearchResults] = React.useState([]);
     const [fetchData, setFetchData] = React.useState(false);
-
+    const [browseHeaderText, setBrowseHeaderText] = React.useState("");
 
     React.useEffect(() => {
         async function getTags() {
             const url = props.root + '/posts/allTags';
             await fetch(url)
             .then((res) => res.json())
-            .then((data) => setTagsList(data.tagsList))
+            .then((data) => {
+                console.log(data);
+                setPopularTags(data.popularTags);
+                setNewTags(data.newTags);
+            })
             .catch((err) => console.log(err));
         }
-        getTags();
-    }, []);
-
-    React.useEffect(() => {
-        async function getSearchResults() {
-            const url = props.root + '/posts/browse'
-            await fetch(url, {
-                method: "POST",
-                mode: "cors",
-                credentials: "include",
-                headers: {
-                    "Content-Type":"application/json",
-                },
-                body: JSON.stringify({browseKey: props.browseKey})
-            }).then((res) => res.json())
+        async function getDefaultSearchResults() {
+            const url = props.root + '/posts/browse/default';
+            await fetch(url)
+            .then((res) => res.json())
             .then((data) => setSearchResults(data.postList))
             .catch((err) => console.log(err));
         }
-        getSearchResults();
-        //write genre fetch request
+        getTags();
+        getDefaultSearchResults();
+    }, []);
+
+    React.useEffect(() => {
+        const checkBrowseKey = () => {
+            for (const key in props.browseKey) {
+                if (props.browseKey[key]) {
+                    return true;
+                }
+            }
+        }
+        if (checkBrowseKey()) {
+            async function getSearchResults() {
+                const url = props.root + '/posts/browse'
+                await fetch(url, {
+                    method: "POST",
+                    mode: "cors",
+                    credentials: "include",
+                    headers: {
+                        "Content-Type":"application/json",
+                    },
+                    body: JSON.stringify({browseKey: props.browseKey})
+                }).then((res) => res.json())
+                .then((data) => setSearchResults(data.postList))
+                .catch((err) => console.log(err));
+            }
+            getSearchResults();
+            //set browse result header
+            setBrowseHeaderText(() => {
+                for (const key in props.browseKey) {
+                    if (props.browseKey[key]) {
+                        if (typeof props.browseKey[key] === 'string') {
+                            return props.browseKey[key][0].toUpperCase() + props.browseKey[key].slice(1);
+                        } else {
+                            return key[0].toUpperCase() + key.slice(1);
+                        }
+                    }
+                }
+            })
+        }
     }, [props.browseKey]);
 
-    function handleGenreClick() {
-
+    function handleGenreClick(genre) {
+        props.setBrowseKey({
+            tag: null,
+            user: null,
+            genre: genre,
+            new: null,
+            top: null,
+        })
     }
 
     const mappedSearchResults = searchResults.map((post) => {
@@ -53,12 +92,26 @@ export default function Browse(props) {
             />
     })
 
-    const mappedTagsList = tagsList.map((tag) => {
+    const mappedPopularTags = popularTags.map((tag) => {
         return <a 
                     onClick={() => props.setBrowseKey({
                         tag: tag.trim().toLowerCase(),
                         user: null,
                         genre: null,
+                        new: null,
+                        top: null,
+                    })}
+                    key={uuidv4()}>
+                {tag}</a>
+    })
+    const mappedNewTags = newTags.map((tag) => {
+        return <a 
+                    onClick={() => props.setBrowseKey({
+                        tag: tag.trim().toLowerCase(),
+                        user: null,
+                        genre: null,
+                        new: null,
+                        top: null,
                     })}
                     key={uuidv4()}>
                 {tag}</a>
@@ -66,8 +119,23 @@ export default function Browse(props) {
 
     return (
         <section className="browse-container">
-            <p className="browse-container-header">Browse Posts</p>
+            <p className="browse-container-header">Browse Posts {browseHeaderText.length > 0 ? 'by' : ''} {browseHeaderText}</p>
             <section className="browse-genre-sidebar">
+                <p className="browse-genre-header">Category</p>
+                <a onClick={() => props.setBrowseKey({
+                    tag: null,
+                    user: null,
+                    genre: null,
+                    new: null,
+                    top: true,
+                })}>Top</a>
+                <a onClick={() => props.setBrowseKey({
+                    tag: null,
+                    user: null,
+                    genre: null,
+                    new: true,
+                    top: false,
+                })}>New</a>
                 <p className="browse-genre-header">Genres</p>
                 <a onClick={() => handleGenreClick("action")}>Action</a>
                 <a onClick={() => handleGenreClick("adventure")}>Adventure</a>
@@ -82,13 +150,13 @@ export default function Browse(props) {
                 <a onClick={() => handleGenreClick("thriller")}>Thriller</a>
             </section>
             <section className="browse-results">
-                {mappedSearchResults}
+                {mappedSearchResults.length > 0 ? mappedSearchResults : <p className="browse-results-no-posts">No posts match this criteria yet...</p>}
             </section>
             <section className="browse-tags-sidebar">
                 <p className="browse-tags-header">Popular Tags</p>
-                {mappedTagsList}
-                <p className="browse-tags-header">Recent Tags</p>
-                
+                {mappedPopularTags}
+                <p className="browse-tags-header">New Tags</p>
+                {mappedNewTags}
             </section>
         </section>
     )

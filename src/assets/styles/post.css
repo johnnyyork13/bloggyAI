@@ -42,6 +42,7 @@
 .more-link {
     text-decoration: underline;
     text-align: right;
+    cursor: pointer;
 }
 
 .post-card-title {
@@ -82,7 +83,7 @@
 
 .add-post-form-container {
     display: flex;
-    flex-direction: column;
+    justify-content: space-evenly;
     text-align: center;
     color: var(--textDark);
 }
@@ -97,14 +98,13 @@
 .add-post-input {
     box-sizing: border-box;
     width: 500px;
-    margin-bottom: 15px;
     padding-left: 10px;
     font-size: 1rem;
     color: var(--textDark);
 }
 
 .add-post-title {
-    margin-top: 20px;
+    
 }
 
 .add-post-title, .add-post-tags {
@@ -138,13 +138,14 @@
     width: 500px;
     height: 40px;
     margin-bottom: 50px;
+    margin-top: 20px;
 }
 
 .post-details-container {
-    position: absolute;
     width: 200px;
-    right: -240px;
-    top: 20px;
+    height: fit-content;
+    margin-top: 87px;
+    margin-left: 20px;
     background-color: var(--eight);
     color: white;
     padding: 10px;

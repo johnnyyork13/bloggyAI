@@ -4,15 +4,22 @@ import {v4 as uuidv4} from 'uuid';
 
 export default function AddPostForm(props) {
 
-    const [post, setPost] = React.useState({
+    const [postExtraDetails, setPostExtraDetails] = React.useState({
+        genre: "action",
+        personality: "absent-minded",
+        length: "500",
+        extra: ""
+    })
+    const [postRequiredFields, setPostRequiredFields] = React.useState({
         title: "",
         body: "",
-        author: props.currentUser.username,
         tags: "",
-        genre: "",
-        personality: "",
-        length: "",
-        extra: ""
+        author: props.currentUser.username,
+    })
+    const [postFormError, setPostFormError] = React.useState({
+        title: false,
+        body: false,
+        tags: false
     })
     const [requestBody, setRequestBody] = React.useState(null);
 
@@ -49,59 +56,91 @@ export default function AddPostForm(props) {
     }, [requestBody])
 
 
-    function handleAddFormInputChange(e) {
-        setPost((prev) => ({
+    function handleAddFormRequiredInputChange(e) {
+        setPostRequiredFields((prev) => ({
             ...prev,
             [e.target.name]: e.target.value
         }))
     }
 
-    function handleFormSubmit(e) {
-        e.preventDefault();
-        const tagArray = post.tags.split(',');
-        const lowerTags = tagArray.map((tag) => tag.toLowerCase());
-        setRequestBody({
-            ...post,
-            body: "Write a blog post about " + post.body,
-            tags: lowerTags
-        })
+    function handleAddFormExtraDetailsInputChange(e) {
+        setPostExtraDetails((prev) => ({
+            ...prev,
+            [e.target.name]: e.target.value
+        }))
+    }
+    
+    function handleFormSubmit() {
+        let allFieldsHaveValues = true;
+        for (const key in postRequiredFields) {
+            if (postRequiredFields[key] === "") {
+                allFieldsHaveValues = false;
+                setPostFormError((prev) => ({
+                    ...prev,
+                    [key]: true
+                }))
+            } else {
+                setPostFormError((prev) => ({
+                    ...prev,
+                    [key]: false
+                }))
+            }
+        }
+        if (allFieldsHaveValues) {
+            const tagArray = postRequiredFields.tags.split(',');
+            const lowerTags = tagArray.map((tag) => tag.toLowerCase());
+            setRequestBody({
+                ...postRequiredFields,
+                ...postExtraDetails,
+                body: "Write a blog post about " + postRequiredFields.body,
+                tags: lowerTags
+            })
+        }
     }
     
     return (
         <section className="add-post-form-container">
-            <h2>Generate Post</h2>
             <form>
-                <input 
-                    className="add-post-input add-post-title" 
-                    type="text" name="title" 
-                    onChange={handleAddFormInputChange} 
-                    value={post.title}
-                    placeholder='Prompt Name' />
-                <section className="add-post-body-input-wrapper">
-                    <span className="add-post-body-input-default-text">Write a blog post about </span>
-                    <textarea 
-                        className="add-post-input add-post-body" 
+                <h2>Generate Post</h2>
+                <label className="login-container-label" htmlFor="title"> {postFormError.title && "Please Enter a Title"}
+                    <input
+                        className="add-post-input add-post-title"
                         type="text" 
-                        name="body" 
-                        onChange={handleAddFormInputChange} 
-                        value={post.body}
-                        placeholder='an adventure climbing Mount Everest.'
-                    ></textarea>
-                </section>
-                <input 
-                    className="add-post-input add-post-tags" 
-                    type="text" 
-                    name="tags" 
-                    onChange={handleAddFormInputChange} 
-                    value={post.tags}
-                    placeholder='Tags (Separate with commas)'/>
+                        name="title"
+                        onChange={handleAddFormRequiredInputChange}
+                        value={postRequiredFields.title}
+                        placeholder='Prompt Name' />
+                </label>
+                <label className="login-container-label" htmlFor="body"> {postFormError.body && "Please Enter a Prompt"}
+                    <section className="add-post-body-input-wrapper">
+                        <span className="add-post-body-input-default-text">Write a blog post about </span>
+                        <textarea
+                            className="add-post-input add-post-body"
+                            type="text"
+                            name="body"
+                            onChange={handleAddFormRequiredInputChange}
+                            value={postRequiredFields.body}
+                            placeholder='an adventure climbing Mount Everest.'
+                        ></textarea>
+                    </section>
+                </label>
+                <label className="login-container-label" htmlFor="tags"> {postFormError.tags && "Please Enter at Least One Tag"}
+                    <input
+                        className="add-post-input add-post-tags"
+                        type="text"
+                        name="tags"
+                        onChange={handleAddFormRequiredInputChange}
+                        value={postRequiredFields.tags}
+                        placeholder='Tags (Separate with commas)'/>
+                </label>
                 <button 
                     className="add-post-submit-btn form-btn" 
-                    type="submit" onClick={handleFormSubmit}
+                    type="button" onClick={handleFormSubmit}
                 >Submit</button>
-                <section className="post-details-container">
+            </form>
+            <section className="post-details-container">
                     <p>Genre</p>
-                    <select onChange={handleAddFormInputChange} name="genre" className="post-details-select">
+                    <select onChange={handleAddFormExtraDetailsInputChange} name="genre" className="post-details-select">
                         <option value="action">Action</option>
                         <option value="adventure">Adventure</option>
                         <option value="comedy">Comedy</option>
@@ -115,7 +154,7 @@ export default function AddPostForm(props) {
                         <option value="thriller">Thriller</option>
                     </select>
                     <p>Personality of Writer</p>
-                    <select onChange={handleAddFormInputChange} name="personality" className="post-details-select">
+                    <select onChange={handleAddFormExtraDetailsInputChange} name="personality" className="post-details-select">
                         <option value="absent-Minded">Absent-Minded</option>
                         <option value="agreeable">Agreeable</option>
                         <option value="ambitious">Ambitious</option>
@@ -142,7 +181,7 @@ export default function AddPostForm(props) {
                         <option value="snob">Snobby</option>
                     </select>
                     <p>Post Length</p>
-                    <select onChange={handleAddFormInputChange} name="length" className="post-details-select">
+                    <select onChange={handleAddFormExtraDetailsInputChange} name="length" className="post-details-select">
                         <option value="500">Short {'(<500 Words)'}</option>
                         <option value="1000">Medium {'(<1000 Words)'}</option>
                         <option value="1500">Long {'(<1500 Words)'}</option>
@@ -150,14 +189,13 @@ export default function AddPostForm(props) {
                     </select>
                     <p>Additional Criteria</p>
                     <textarea
-                        onChange={handleAddFormInputChange}
+                        onChange={handleAddFormExtraDetailsInputChange}
                         className="post-details-textarea"
-                        value={post.extra}
+                        value={postExtraDetails.extra}
                         name="extra"
                         placeholder="Put anything else here that you want the blog post to contain."
                     ></textarea>
                 </section>
-            </form>
         </section>
     )
 }

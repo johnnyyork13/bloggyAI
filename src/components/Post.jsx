@@ -4,6 +4,7 @@ import {v4 as uuidv4} from 'uuid';
 import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import Modal from './Modal';
 
 export default function Post(props) {
     const [post, setPost] = React.useState({
@@ -23,6 +24,11 @@ export default function Post(props) {
     const [deleteComment, setDeleteComment] = React.useState(null);
     const [likedPost, setLikedPost] = React.useState(null);
     const [render, setRender] = React.useState(false);
+    const [showModal, setShowModal] = React.useState(false);
+    const [modalDetails, setModalDetails] = React.useState({
+        text: "Are you sure you want to delete this post?",
+        includeGoBackBtn: true,
+    })
 
     React.useEffect(() => {
         async function getPost() {
@@ -54,7 +60,14 @@ export default function Post(props) {
                         },
                         body: JSON.stringify({postID: props.currentPost._id})
                     })
-                    .then(() => {props.setPage("home")});
+                    .then(() => {
+                        setModalDetails({
+                            text: "Post was Successfully Deleted!",
+                            includeGoBackBtn: false,
+                        })
+                        //props.setPage("home")
+                        //setShowModal(false);
+                    });
                 }
             } catch(err) {
                 console.log(err);
@@ -173,6 +186,15 @@ export default function Post(props) {
 
     return (   
         <section className="post">
+            {showModal && <Modal 
+                text={modalDetails.text}
+                setPage={props.setPage}
+                setShowModal={setShowModal}
+                goToPage="home"
+                includeGoBackBtn={modalDetails.includeGoBackBtn}
+                modalFunction={setDeletePost}
+                modalFunctionValue={true}
+            />}
             <section className="post-title">
                 <div className="post-likes">
                     <div className="post-likes-count">
@@ -190,7 +212,7 @@ export default function Post(props) {
                     (props.currentUser.username === post.author || 
                         props.currentUser.membership === "admin")) &&
                         <a className="post-delete-btn"
-                            onClick={() => setDeletePost(true)}
+                            onClick={() => setShowModal(true)}
                         >Delete Post</a>}
             </section>
             <p className="post-title-sub">Prompt created by <a 
@@ -224,7 +246,7 @@ export default function Post(props) {
                     >Submit</button>
                 </section> : <p className="comment-login-notification">You must be logged in to add comments. <span className="comment-login-btn" onClick={() => props.setPage("login")}>Log In</span></p>}
                 <p className="comments-title">Comments</p>
-                {post.comments.length === 0 ?
+                {post.comments && post.comments.length === 0 ?
                     <p className="comment-first-notification">Be the first to comment.</p> : 
                     mappedComments}
             </section>

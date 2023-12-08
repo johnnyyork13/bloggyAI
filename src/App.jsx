@@ -22,7 +22,9 @@ function App() {
   const [browseKey, setBrowseKey] = React.useState({
     tag: null,
     user: null,
-    genre: null
+    genre: null,
+    new: null,
+    top: null,
   });
 
   // const root = 'https://us-central1-api-backend-28a77.cloudfunctions.net/api';
@@ -30,6 +32,15 @@ function App() {
 
   React.useEffect(() => {
     setOpenDropdown(false);
+    if (page !== 'browse') {
+      setBrowseKey({
+        tag: null,
+        user: null,
+        genre: null,
+        new: null,
+        top: null
+      })
+    }
   }, [page])
 
   React.useEffect(() => {
@@ -54,10 +65,10 @@ function App() {
   return (
     <div className='App' onClick={() => setOpenDropdown(false)}>
       {(modalBackground && page === "addPost") &&
-        <div className="modal-background">
-          <div className="modal-loading">
-            <p className="loading-text">Generating...</p>
-            <div className="loader-animation">
+        <div className="prompt-modal-background">
+          <div className="prompt-modal-loading">
+            <p className="prompt-loading-text">Generating...</p>
+            <div className="prompt-loader-animation">
             </div>
           </div>
         </div>
@@ -92,6 +103,7 @@ function App() {
             setPage={setPage}
             page={page}
             setCurrentPost={setCurrentPost}
+            setBrowseKey={setBrowseKey}
         />}
         {page === "login" &&
           <Login 

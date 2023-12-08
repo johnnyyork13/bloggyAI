@@ -55,12 +55,36 @@ export default function PostCardContainer(props) {
             <section className="post-card-container-section">
                 {mappedRecentPosts.length > 0 ? mappedRecentPosts : "No Posts to Show."}
             </section>
-            <p className="more-recent-posts more-link">More</p>
+            <p 
+                onClick={() => {props.setBrowseKey({
+                    tag: null,
+                    user: null,
+                    genre: null,
+                    new: true,
+                    top: null,
+                    })
+                    props.setPage("browse");
+        }
+    }
+                className="more-recent-posts more-link"
+                >More</p>
             <p className="post-card-container-container-header">Top Rated Posts</p>
             <section className="post-card-container-section">
                 {mappedTopRatedPosts.length > 0 ? mappedTopRatedPosts : "No Posts to Show."}
             </section>
-            <p className="more-top-rated-posts more-link">More</p>
+            <p 
+                onClick={() => {props.setBrowseKey({
+                                tag: null,
+                                user: null,
+                                genre: null,
+                                new: null,
+                                top: true,
+                                })
+                                props.setPage("browse");
+                    }
+                }
+                className="more-top-rated-posts more-link"
+                >More</p>
         </section>
     )
 }
