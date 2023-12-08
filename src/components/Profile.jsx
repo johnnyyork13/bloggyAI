@@ -40,26 +40,27 @@ export default function Profile(props) {
 
     const mappedRecentPosts = recentPosts.map((post) => {
         return <PostCard 
-                key={uuidv4()}
-                post={post}
-                setPage={props.setPage}
-                page={props.page}
-                setCurrentPost={props.setCurrentPost}
-            /> 
+                    key={uuidv4()}
+                    post={post}
+                    setPage={props.setPage}
+                    page={props.page}
+                    setCurrentPost={props.setCurrentPost}
+                /> 
     })
 
     const mappedTopRatedPosts = topRatedPosts.map((post) => {
         return <PostCard 
-                key={uuidv4()}
-                post={post}
-                setPage={props.setPage}
-                page={props.page}
-                setCurrentPost={props.setCurrentPost}
-            /> 
+                    key={uuidv4()}
+                    post={post}
+                    setPage={props.setPage}
+                    page={props.page}
+                    setCurrentPost={props.setCurrentPost}
+                /> 
     })
 
     const mappedLikedPosts = likedPosts.map((post) => {
         return <span 
+                    key={uuidv4()}
                     className="liked-post"
                     onClick={() => setLikedPostClick(post)}>
                 <a>{post.title}</a>

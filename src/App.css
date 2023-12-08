@@ -209,9 +209,9 @@ nav a:hover {
 }
 
 .header-dropdown {
-    left: -45px;
+    left: -20px;
     top: 24px;
-    width: 100px;
+    min-width: fit-content;
     padding: 10px;
     padding-top: 5px;
     line-height: 30px;
@@ -222,7 +222,10 @@ nav a:hover {
     border: 2px solid var(--eight);
 }
 
-
+.header-dropdown a {
+    white-space: nowrap;
+    margin: 5px;
+}
 
 .close-dropdown {
     visibility: hidden;

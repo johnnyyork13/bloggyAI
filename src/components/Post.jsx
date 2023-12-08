@@ -6,8 +6,6 @@ import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 
 export default function Post(props) {
-    //console.log(props.currentUser);
-
     const [post, setPost] = React.useState({
         title: "",
         body: "",
@@ -21,7 +19,8 @@ export default function Post(props) {
         body: "",
         date: ""
     });
-    const [sendComment, setSendComment] = React.useState(false);
+    const [addComment, setAddComment] = React.useState(false);
+    const [deleteComment, setDeleteComment] = React.useState(null);
     const [likedPost, setLikedPost] = React.useState(null);
     const [render, setRender] = React.useState(false);
 
@@ -39,10 +38,10 @@ export default function Post(props) {
             }
         }
         getPost();
-    }, [sendComment, render, props.currentPost]);
+    }, [addComment, render, props.currentPost, deleteComment]);
 
     React.useEffect(() => {
-        const url = props.root + `/post/${props.currentPost._id}/delete`;
+        const url = props.root + `/post/delete`;
         async function handleDeletePost() {
             try {
                 if (deletePost) {
@@ -65,10 +64,10 @@ export default function Post(props) {
     }, [deletePost])
 
     React.useEffect(() => {
-        async function addComment() {
-            if (sendComment) {
+        async function postAddComment() {
+            if (addComment) {
                 try {
-                    const url = props.root + `/post/${props.currentPost._id}/addComment`;
+                    const url = props.root + `/post/addComment`;
                     await fetch(url, {
                         method: "POST",
                         mode: "cors",
@@ -81,18 +80,18 @@ export default function Post(props) {
                             comment: comment
                         })
                     }).then((res) => res.json())
-                    .then((res) => setSendComment(false));
+                    .then((res) => setAddComment(false));
                 } catch(err) {
                     console.log(err);
                 }
             }
         }
-        addComment();
-    }, [sendComment])
+        postAddComment();
+    }, [addComment])
 
     React.useEffect(() => {
         try {
-            if (likedPost !== null) {
+            if (likedPost !== null && props.currentUser.username !== post.author) {
                 const url = props.root + `/user/votePost`;
                 async function votePost() {
                     await fetch(url, {
@@ -105,7 +104,7 @@ export default function Post(props) {
                         body: JSON.stringify({
                             likedPost: likedPost,
                             postID: props.currentPost._id,
-                            userID: props.currentUser._id,
+                            username: props.currentUser.username,
                         })
                     }).then((res) => res.json())
                     .then(() => {
@@ -129,10 +128,11 @@ export default function Post(props) {
     function handleCommentSubmit() {
         setComment((prev) => ({
             ...prev,
-            author: props.currentUser.displayName,
-            date: new Date()
+            author: props.currentUser.username,
+            date: new Date(),
+            _id: uuidv4()
         }))
-        setSendComment(true);
+        setAddComment(true);
     }
 
     function handleLikeButtonClick(bool) {
@@ -143,19 +143,31 @@ export default function Post(props) {
         }
     }
 
-    const mappedComments = post.comments.map((comment, index) => {
+    const mappedComments = post.comments && post.comments.map((comment, index) => {
         return <Comment 
             key={uuidv4()}
+            root={props.root}
             isOdd={index % 2 === 0 ? false : true}
             comment={comment}
+            setPage={props.setPage}
+            setCurrentUser={props.setCurrentUser}
+            currentUser={props.currentUser}
+            setRender={setRender}
         />
     })
 
     const mappedTags = post.tags.map((tag, index) => {
         return <span 
                     key={uuidv4()}
-                    className="tag">
-                    {tag}{index < post.tags.length - 1 ? "," : ""}
+                    onClick={() => {
+                        props.setPage('browse');
+                        props.setBrowseKey({
+                            tag: tag,
+                            user: null,
+                            genre: null 
+                        })
+                    }}
+                    className="tag"> {tag}{index < post.tags.length - 1 ? "," : ""}
                 </span>
     })
 

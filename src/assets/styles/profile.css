@@ -21,10 +21,10 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 170px);
+    grid-template-rows: repeat(2, 180px);
     gap: 20px;
     overflow: auto;
-    max-height: 360px;
+    max-height: 380px;
     padding: 5px;
 }
 

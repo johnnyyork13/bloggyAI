@@ -6,8 +6,8 @@ import PostCardContainer from './components/PostCardContainer';
 import Post from './components/Post';
 import Login from './components/Login';
 import SignUp from './components/SignUp';
-import SearchPosts from './components/SearchPosts';
 import Profile from './components/Profile';
+import Browse from './components/Browse';
 import './App.css'
 import './assets/styles/post.css';
 import PostCard from './components/PostCard';
@@ -19,6 +19,11 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState(null)
   const [openDropdown, setOpenDropdown] = React.useState(false);
   const [modalBackground, setModalBackground] = React.useState(false);
+  const [browseKey, setBrowseKey] = React.useState({
+    tag: null,
+    user: null,
+    genre: null
+  });
 
   // const root = 'https://us-central1-api-backend-28a77.cloudfunctions.net/api';
   const root = "http://localhost:3000";
@@ -26,6 +31,25 @@ function App() {
   React.useEffect(() => {
     setOpenDropdown(false);
   }, [page])
+
+  React.useEffect(() => {
+    async function checkIfAlreadyLoggedIn() {
+      await fetch(root, {
+        mode: "cors",
+        credentials: "include",
+      })
+      .then((res) => res.json())
+      .then((res) => {
+        if (!res.message) {
+          setCurrentUser(res);
+        }
+      }).catch((err) => {
+        console.log(err);
+      });
+                      
+    }
+    checkIfAlreadyLoggedIn();
+  }, [])
 
   return (
     <div className='App' onClick={() => setOpenDropdown(false)}>
@@ -84,6 +108,7 @@ function App() {
             setCurrentUser={setCurrentUser}
             setModalBackground={setModalBackground}
             setPage={setPage}
+            setBrowseKey={setBrowseKey}
           />}
         {page === "addPost" &&
           <AddPostForm
@@ -106,6 +131,17 @@ function App() {
           <Profile 
             root={root}
             currentUser={currentUser}
+            setPage={setPage}
+            page={page}
+            setCurrentPost={setCurrentPost}
+          />
+        }
+        {
+          page === "browse" &&
+          <Browse 
+            root={root}
+            browseKey={browseKey}
+            setBrowseKey={setBrowseKey}
             setPage={setPage}
             page={page}
             setCurrentPost={setCurrentPost}

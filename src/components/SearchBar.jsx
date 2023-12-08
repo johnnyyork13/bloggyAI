@@ -1,8 +1,7 @@
 import React from 'react';
-import PostCardContainer from './PostCardContainer';
 import {v4 as uuidv4} from 'uuid';
 
-export default function SearchPosts(props) {
+export default function SearchBar(props) {
 
     const [searchList, setSearchList] = React.useState([])
     const [searchResults, setSearchResults] = React.useState([])

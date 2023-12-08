@@ -8,7 +8,11 @@ export default function AddPostForm(props) {
         title: "",
         body: "",
         author: props.currentUser.username,
-        tags: ""
+        tags: "",
+        genre: "",
+        personality: "",
+        length: "",
+        extra: ""
     })
     const [requestBody, setRequestBody] = React.useState(null);
 
@@ -95,6 +99,64 @@ export default function AddPostForm(props) {
                     className="add-post-submit-btn form-btn" 
                     type="submit" onClick={handleFormSubmit}
                 >Submit</button>
+                <section className="post-details-container">
+                    <p>Genre</p>
+                    <select onChange={handleAddFormInputChange} name="genre" className="post-details-select">
+                        <option value="action">Action</option>
+                        <option value="adventure">Adventure</option>
+                        <option value="comedy">Comedy</option>
+                        <option value="crime">Crime/Mystery</option>
+                        <option value="fantasy">Fantasy</option>
+                        <option value="historical">Historical</option>
+                        <option value="horror">Horror</option>
+                        <option value="romance">Romance</option>
+                        <option value="satire">Satire</option>
+                        <option value="scifi">Science Fiction</option>
+                        <option value="thriller">Thriller</option>
+                    </select>
+                    <p>Personality of Writer</p>
+                    <select onChange={handleAddFormInputChange} name="personality" className="post-details-select">
+                        <option value="absent-Minded">Absent-Minded</option>
+                        <option value="agreeable">Agreeable</option>
+                        <option value="ambitious">Ambitious</option>
+                        <option value="authoritarian">Authoritarian</option>
+                        <option value="conscientious">Conscientious</option>
+                        <option value="cooperative">Cooperative</option>
+                        <option value="extraverted">Extraverted</option>
+                        <option value="gentle">Gentle</option>
+                        <option value="gritful">Gritful</option>
+                        <option value="honest">Honest</option>
+                        <option value="idiotic">Idiotic</option>
+                        <option value="impulsive">Impulsive</option>
+                        <option value="insecure">Insecure</option>
+                        <option value="intellectual">Intellectual</option>
+                        <option value="introverted">Introverted</option>
+                        <option value="needy">Needy</option>
+                        <option value="neurotic">Neurotic</option>
+                        <option value="perfected">Perfected</option>
+                        <option value="persistent">Persistent</option>
+                        <option value="psychotic">Psychotic</option>
+                        <option value="realistic">Realistic</option>
+                        <option value="religious">Religious</option>
+                        <option value="right-Wing">Right-Wing</option>
+                        <option value="snob">Snobby</option>
+                    </select>
+                    <p>Post Length</p>
+                    <select onChange={handleAddFormInputChange} name="length" className="post-details-select">
+                        <option value="500">Short {'(<500 Words)'}</option>
+                        <option value="1000">Medium {'(<1000 Words)'}</option>
+                        <option value="1500">Long {'(<1500 Words)'}</option>
+                        <option value="2000">Very Long {'(<2000 Words)'}</option>
+                    </select>
+                    <p>Additional Criteria</p>
+                    <textarea
+                        onChange={handleAddFormInputChange}
+                        className="post-details-textarea"
+                        value={post.extra}
+                        name="extra"
+                        placeholder="Put anything else here that you want the blog post to contain."
+                    ></textarea>
+                </section>
             </form>
         </section>
     )

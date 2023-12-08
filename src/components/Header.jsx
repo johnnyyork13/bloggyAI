@@ -1,5 +1,5 @@
 import react from 'react-dom';
-import SearchPosts from './SearchPosts';
+import SearchBar from './SearchBar';
 
 export default function Header(props) {
 
@@ -28,7 +28,7 @@ export default function Header(props) {
     return (
         <header>
             <p onClick={() => props.setPage("home")}>BloggyAI</p>
-            <SearchPosts 
+            <SearchBar 
                 root={props.root}
                 setPage={props.setPage}
                 setCurrentPost={props.setCurrentPost}
@@ -57,6 +57,11 @@ export default function Header(props) {
                                        })
                                 }
                             }>My Posts</a>
+                            <a
+                                onClick={() => props.setPage("browse")}
+                            >Browse</a>                            
+                            <a>Help</a>
+                            <a>About Bloggy</a>
                             <a onClick={() => {
                                 props.setPage("home");
                                 handleLogout();
