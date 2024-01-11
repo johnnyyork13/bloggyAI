@@ -1,4 +1,7 @@
 import React from 'react'
+import './App.css'
+import './assets/styles/post.css';
+import './queries.css';
 import Header from './components/Header';
 import AddUserForm from './components/AddUserForm';
 import AddPostForm from './components/AddPostForm';
@@ -8,9 +11,9 @@ import Login from './components/Login';
 import SignUp from './components/SignUp';
 import Profile from './components/Profile';
 import Browse from './components/Browse';
-import './App.css'
-import './assets/styles/post.css';
 import PostCard from './components/PostCard';
+import Help from './components/Help';
+import About from './components/About';
 
 function App() {
 
@@ -157,6 +160,18 @@ function App() {
             setPage={setPage}
             page={page}
             setCurrentPost={setCurrentPost}
+          />
+        }
+
+        {page === "help" && 
+          <Help 
+            setPage={setPage}
+          />
+        }
+
+        {page === "about" && 
+          <About 
+            setPage={setPage}
           />
         }
       </main>

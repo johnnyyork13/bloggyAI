@@ -49,7 +49,7 @@ export default function Header(props) {
                 setCurrentPost={props.setCurrentPost}
             />
             <nav className="link-container">
-                {props.currentUser && <a onClick={() => props.setPage("addPost")}>
+                {props.currentUser && <a className="add-post-link" onClick={() => props.setPage("addPost")}>
                     <span className="plus-symbol">{String.fromCharCode(43)}</span> Add Post
                 </a>}
                 {/* {props.currentUser && 
@@ -62,6 +62,7 @@ export default function Header(props) {
                     <div className="header-dropdown-menu" onClick={handleOpenDropdown}>
                         {props.currentUser.displayName}<span className="dropdown-arrow"></span>
                         <div className={`header-dropdown ${props.openDropdown ? "open-dropdown" : "close-dropdown"}`}>
+                            <a onClick={() => props.setPage("addPost")}>Add Post</a>  
                             <a onClick={
                                 () => {props.setPage("profile")
                                        props.setCurrentUser((prev) => {
@@ -72,11 +73,9 @@ export default function Header(props) {
                                        })
                                 }
                             }>My Posts</a>
-                            <a
-                                onClick={() => props.setPage("browse")}
-                            >Browse</a>                            
-                            <a>Help</a>
-                            <a>About Bloggy</a>
+                            <a onClick={() => props.setPage("browse")}>Browse</a>                            
+                            <a onClick={() => props.setPage("help")}>Help</a>
+                            <a onClick={() => props.setPage("about")}>About Bloggy</a>
                             <a onClick={() => {
                                 setShowModal(true);
                                 props.setCurrentUser(null)

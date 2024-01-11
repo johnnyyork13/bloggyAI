@@ -195,6 +195,9 @@ export default function Post(props) {
                 modalFunction={setDeletePost}
                 modalFunctionValue={true}
             />}
+            <section className="post-title-small">
+                <p className="post-title-header-small">{post.title}</p>
+            </section>
             <section className="post-title">
                 <div className="post-likes">
                     <div className="post-likes-count">

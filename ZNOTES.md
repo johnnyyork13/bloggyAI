@@ -1,7 +1,7 @@
 TODO
-Add confirmation modal for deleting posts
-Add logout confirmation
-Add account creation modal to tell user to login
+Validate tags in case someone puts spaces instead of commas
+Implement popular tag sorting
+
 
 TEST ACCOUNTS
 johnnyyork13 - testtest

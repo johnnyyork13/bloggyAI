@@ -5,14 +5,13 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default function PostCardContainer(props) {
 
-    const url = props.root + "/posts/"
-
     const [recentPosts, setRecentPosts] = React.useState([]);
     const [topRatedPosts, setTopRatedPosts] = React.useState([]);
 
     React.useEffect(() => {
-        async function getPosts(url) {
+        async function getPosts() {
             try {
+                const url = props.root + "/posts/"
                 await fetch(url, {
                     credentials: 'include',
                 })
@@ -25,7 +24,7 @@ export default function PostCardContainer(props) {
                 console.log(err);
             }
         }
-        getPosts(url);
+        getPosts();
     }, []);
 
 
@@ -51,7 +50,7 @@ export default function PostCardContainer(props) {
 
     return (
         <section className="post-card-container-container">
-            <p className="post-card-container-container-header">New Posts</p>
+            <p className="post-card-container-container-header">New Community Posts</p>
             <section className="post-card-container-section">
                 {mappedRecentPosts.length > 0 ? mappedRecentPosts : "No Posts to Show."}
             </section>
@@ -68,7 +67,7 @@ export default function PostCardContainer(props) {
     }
                 className="more-recent-posts more-link"
                 >More</p>
-            <p className="post-card-container-container-header">Top Rated Posts</p>
+            <p className="post-card-container-container-header">Top Rated Community Posts</p>
             <section className="post-card-container-section">
                 {mappedTopRatedPosts.length > 0 ? mappedTopRatedPosts : "No Posts to Show."}
             </section>

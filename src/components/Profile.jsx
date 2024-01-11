@@ -69,6 +69,7 @@ export default function Profile(props) {
 
     return (
         <section className="profile-container">
+            <p className="profile-header">{props.currentUser.visiting}'s Profile</p>
             <section className="profile-body-container">
                 <section className="profile-post-container">
                     <p className="profile-post-container-header">{props.currentUser.visiting}'s Posts</p>

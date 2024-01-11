@@ -31,6 +31,7 @@ body {
     flex-direction: column;
     align-items: center;
     position: relative;
+    color: var(--textDark);
 }
 
 .prompt-modal-background, .modal-background {
@@ -40,7 +41,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 3;
+    z-index: 8;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -149,6 +150,7 @@ header {
 
 .search-result {
     font-size: 1rem;
+    white-space: nowrap;
     color: var(--nineFifty);
     height: 30px;
     display: flex;
@@ -212,6 +214,7 @@ nav a:hover {
     align-items: center;
     justify-content: space-between;
     position: relative;
+    z-index: 4;
 }
 
 .header-dropdown-menu:hover {
@@ -338,4 +341,42 @@ main {
     color: var(--seven);
 }
 
+.help-container {
+    width: 60%;
+    margin-bottom: 100px;
+}
 
+.help-main-header {
+    font-size: 2rem;
+    font-weight: bolder;
+    text-align: center;
+}
+
+.help-section-header {
+    font-size: 1.4rem;
+    font-weight: bolder;
+}
+
+.help-section-body {
+    font-size: 1.2rem;
+}
+
+.about-container {
+    width: 60%;
+}
+
+.about-header-main {
+    font-size: 2rem;
+    text-align: center;
+    font-weight: bolder;
+}
+
+.about-section-body {
+    font-size: 1.5rem;
+}
+
+.back-home-link {
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 1.2rem;
+}

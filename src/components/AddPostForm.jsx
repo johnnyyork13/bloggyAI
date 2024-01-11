@@ -138,6 +138,7 @@ export default function AddPostForm(props) {
                     type="button" onClick={handleFormSubmit}
                 >Submit</button>
             </form>
+            <p className="post-details-container-header">Additional Information</p>
             <section className="post-details-container">
                     <p>Genre</p>
                     <select onChange={handleAddFormExtraDetailsInputChange} name="genre" className="post-details-select">
@@ -187,7 +188,7 @@ export default function AddPostForm(props) {
                         <option value="1500">Long {'(<1500 Words)'}</option>
                         <option value="2000">Very Long {'(<2000 Words)'}</option>
                     </select>
-                    <p>Additional Criteria</p>
+                    <p>Extra Details</p>
                     <textarea
                         onChange={handleAddFormExtraDetailsInputChange}
                         className="post-details-textarea"
@@ -196,6 +197,11 @@ export default function AddPostForm(props) {
                         placeholder="Put anything else here that you want the blog post to contain."
                     ></textarea>
                 </section>
+
+                <button 
+                    className="add-post-submit-btn form-btn add-post-submit-btn-small" 
+                    type="button" onClick={handleFormSubmit}
+                >Submit</button>
         </section>
     )
 }

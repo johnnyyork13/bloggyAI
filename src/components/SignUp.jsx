@@ -89,7 +89,7 @@ export default function SignUp(props) {
                 setShowModal={setShowModal}
                 goToPage="home"
             />}
-            <p className="login-container-header">Create New Blog</p>
+            <p className="login-container-header">Create New Account</p>
             <div className='login-container-form'>
                 <label className="login-container-label" htmlFor="username"> {(!signUpError && formError.username) && 'Please Enter a Username'}{signUpError && 'Username is Already Taken'}
                     <input className="login-input" onChange={handleInputChange} type="text" name="username" placeholder="Username*"/>

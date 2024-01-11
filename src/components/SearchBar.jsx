@@ -45,7 +45,8 @@ export default function SearchBar(props) {
                     props.setPage("post");
                 }}
                 className="search-result">
-                {post.title} <p>(tags: {post.tags.join(",")})</p>
+                {post.title} 
+                {/* <p>(tags: {post.tags.join(",")})</p> */}
             </a>
     })
 

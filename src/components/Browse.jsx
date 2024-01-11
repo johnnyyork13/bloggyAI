@@ -10,6 +10,8 @@ export default function Browse(props) {
     const [searchResults, setSearchResults] = React.useState([]);
     const [fetchData, setFetchData] = React.useState(false);
     const [browseHeaderText, setBrowseHeaderText] = React.useState("");
+    const [openSmallGenre, setOpenSmallGenre] = React.useState(false);
+    const [openSmallTag, setOpenSmallTag] = React.useState(false);
 
     React.useEffect(() => {
         async function getTags() {
@@ -17,7 +19,6 @@ export default function Browse(props) {
             await fetch(url)
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 setPopularTags(data.popularTags);
                 setNewTags(data.newTags);
             })
@@ -120,6 +121,47 @@ export default function Browse(props) {
     return (
         <section className="browse-container">
             <p className="browse-container-header">Browse Posts {browseHeaderText.length > 0 ? 'by' : ''} {browseHeaderText}</p>
+            <section className="browse-genre-sidebar-small">
+                <div onClick={() => setOpenSmallGenre((prev) => !prev)} className="browse-genre-sidebar-small-header"><span>Browse by Genre</span><span className={`small-down-arrow ${openSmallGenre && "animate-arrow-spin"}`}></span></div>
+                {openSmallGenre && <section className="browse-genres-small">
+                <p className="browse-genre-header">Category</p>
+                    <a onClick={() => props.setBrowseKey({
+                        tag: null,
+                        user: null,
+                        genre: null,
+                        new: null,
+                        top: true,
+                    })}>Top</a>
+                    <a onClick={() => props.setBrowseKey({
+                        tag: null,
+                        user: null,
+                        genre: null,
+                        new: true,
+                        top: false,
+                    })}>New</a>
+                    <p className="browse-genre-header">Genres</p>
+                    <a onClick={() => handleGenreClick("action")}>Action</a>
+                    <a onClick={() => handleGenreClick("adventure")}>Adventure</a>
+                    <a onClick={() => handleGenreClick("comedy")}>Comedy</a>
+                    <a onClick={() => handleGenreClick("crime")}>Crime/Mystery</a>
+                    <a onClick={() => handleGenreClick("fantasy")}>Fantasy</a>
+                    <a onClick={() => handleGenreClick("historical")}>Historical</a>
+                    <a onClick={() => handleGenreClick("horror")}>Horror</a>
+                    <a onClick={() => handleGenreClick("romance")}>Romance</a>
+                    <a onClick={() => handleGenreClick("satire")}>Satire</a>
+                    <a onClick={() => handleGenreClick("scifi")}>Science Fiction</a>
+                    <a onClick={() => handleGenreClick("thriller")}>Thriller</a>
+                </section>}
+            </section>
+            <section className="browse-tag-sidebar-small">
+                <div onClick={() => setOpenSmallTag((prev) => !prev)} className="browse-tag-sidebar-small-header">Browse by Tag <div className={`small-down-arrow ${openSmallTag && "animate-arrow-spin"}`}></div></div>
+                {openSmallTag && <section className="browse-tags-small">
+                    <p className="browse-tags-header">Popular Tags</p>
+                    {mappedPopularTags}
+                    <p className="browse-tags-header">New Tags</p>
+                    {mappedNewTags}
+                </section>}
+            </section>
             <section className="browse-genre-sidebar">
                 <p className="browse-genre-header">Category</p>
                 <a onClick={() => props.setBrowseKey({

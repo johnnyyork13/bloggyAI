@@ -5,6 +5,12 @@
     align-items: center;
 }
 
+.profile-header {
+    font-size: 2rem;
+    font-weight: bolder;
+    color: var(--textDark);
+}
+
 .profile-body-container {
     width: 100%;
     display: flex;
@@ -21,7 +27,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 180px);
+    grid-template-rows: minmax(180px, 1fr);
     gap: 20px;
     overflow: auto;
     max-height: 380px;

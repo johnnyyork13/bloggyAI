@@ -141,6 +141,10 @@
     margin-top: 20px;
 }
 
+.post-details-container-header {
+    display: none;
+}
+
 .post-details-container {
     width: 200px;
     height: fit-content;
@@ -170,6 +174,10 @@
     font-size: 1rem;
 }
 
+.add-post-submit-btn-small {
+    display: none;
+}
+
 .post {
     position: relative;
     margin-top: 20px;
@@ -189,6 +197,14 @@
     justify-content: space-around;
     align-items: center;
     position: relative;
+}
+
+.post-title-small {
+    background-color: var(--eight);
+    color: var(--textLight);
+    width: 80%;
+    text-align: center;
+    font-weight: bolder;
 }
 
 .post-likes {
@@ -221,6 +237,10 @@
     border: none;
     color: var(--textLight);
     cursor: pointer;
+}
+
+.post-title-small {
+    display: none;
 }
 
 .post-title-header {
