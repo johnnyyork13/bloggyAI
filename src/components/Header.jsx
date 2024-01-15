@@ -58,7 +58,7 @@ export default function Header(props) {
                         handleLogout();
                         props.setCurrentUser(null)}}
                     >Logout</a>} */}
-                {props.currentUser &&
+                {props.currentUser && props.currentUser.displayName &&
                     <div className="header-dropdown-menu" onClick={handleOpenDropdown}>
                         {props.currentUser.displayName}<span className="dropdown-arrow"></span>
                         <div className={`header-dropdown ${props.openDropdown ? "open-dropdown" : "close-dropdown"}`}>

@@ -16,7 +16,7 @@ export default function Login(props) {
     function handleInputChange(e) {
         setUser((prev) => ({
             ...prev,
-            [e.target.name] : e.target.value
+            [e.target.name] : e.target.value.toLowerCase()
         }))
     }
 
@@ -45,6 +45,7 @@ export default function Login(props) {
                 }
               } else {
                 setLoginError(true)
+                setLoginUser(false);
               }
             });
           }
@@ -52,6 +53,7 @@ export default function Login(props) {
         }
       } catch(err) {
         console.log(err);
+        setLoginUser(false);
       }
     }, [loginUser]);
 

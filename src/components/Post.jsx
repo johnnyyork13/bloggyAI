@@ -145,7 +145,9 @@ export default function Post(props) {
             date: new Date(),
             _id: uuidv4()
         }))
-        setAddComment(true);
+        if (comment.body !== "") {
+            setAddComment(true);
+        }
     }
 
     function handleLikeButtonClick(bool) {

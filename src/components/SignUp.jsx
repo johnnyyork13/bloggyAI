@@ -84,7 +84,7 @@ export default function SignUp(props) {
     return (
         <section className="login-container">
             {showModal && <Modal
-                text="Please Login With Your Username and Password." 
+                text="Account Created! Please Login With Your New Account" 
                 setPage={props.setPage}
                 setShowModal={setShowModal}
                 goToPage="home"
