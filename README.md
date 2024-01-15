@@ -1,8 +1,16 @@
-# React + Vite
+BloggyAI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This application is an AI-powered blog post generator.
 
-Currently, two official plugins are available:
+User's can input a prompt, along with additional context provided in the sidebar, to genereate unique
+blog posts derived from ChatGPT's gpt-3.5-turbo engine. 
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+User's are also able to browse posts created by other users, as well as comment and add posts to their favorites. 
+
+
+This application was built to practice concepts like API integration and persisting user logins. 
+
+I hope you have as much fun playing with it as I did building it! Thanks!
+
+
+BloggyAI link: https://johnnyyork13.github.io/blog-api
