@@ -21,7 +21,7 @@ function App() {
   const [page, setPage] = React.useState("home");
   const [currentUser, setCurrentUser] = React.useState(null)
   const [openDropdown, setOpenDropdown] = React.useState(false);
-  const [modalBackground, setModalBackground] = React.useState(false);
+  const [modalBackground, setModalBackground] = React.useState(true);
   const [browseKey, setBrowseKey] = React.useState({
     tag: null,
     user: null,
@@ -30,8 +30,8 @@ function App() {
     top: null,
   });
 
-  // const root = 'https://us-central1-api-backend-28a77.cloudfunctions.net/api';
-  const root = "http://localhost:3000";
+  const root = 'https://us-central1-api-backend-28a77.cloudfunctions.net/api';
+  // const root = "http://localhost:3000";
 
   React.useEffect(() => {
     setOpenDropdown(false);
@@ -76,6 +76,15 @@ function App() {
           </div>
         </div>
       }
+      {(modalBackground && page === "home") &&
+        <div className="prompt-modal-background">
+          <div className="prompt-modal-loading">
+            <p className="prompt-loading-text">Getting Posts...</p>
+            <div className="prompt-loader-animation">
+            </div>
+          </div>
+        </div>
+      }
       {(modalBackground && page === "post") &&
         <div className="modal-background">
           <div className="modal-login">
@@ -107,6 +116,7 @@ function App() {
             page={page}
             setCurrentPost={setCurrentPost}
             setBrowseKey={setBrowseKey}
+            setModalBackground={setModalBackground}
         />}
         {page === "login" &&
           <Login 

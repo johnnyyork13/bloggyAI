@@ -19,6 +19,7 @@ export default function PostCardContainer(props) {
                 .then((data) => {
                     setRecentPosts(data.recentPosts);
                     setTopRatedPosts(data.topRatedPosts);
+                    props.setModalBackground(false);
                 });
             } catch(err) {
                 console.log(err);
