@@ -13,4 +13,4 @@ User's are also able to browse posts created by other users, as well as comment 
 I hope you have as much fun playing with it as I did building it! Thanks!
 
 
-# BloggyAI link: https://johnnyyork13.github.io/blog-api
+### BloggyAI link: https://johnnyyork13.github.io/blog-api
