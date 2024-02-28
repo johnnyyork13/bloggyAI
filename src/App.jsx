@@ -87,15 +87,19 @@ function App() {
       }
       {(modalBackground && page === "post") &&
         <div className="modal-background">
-          <div className="modal-login">
+          <div className="modal login-modal">
             <p className="loading-text">Please Login to interact with posts.</p>
-            <button 
-              onClick={() => {setModalBackground(false);
-                              setPage("login");}}                
-            >Login</button>
-            <button
-              onClick={() => {setModalBackground(false)}}
-            >I'm Good</button>
+            <div className="login-modal-btns">
+              <button 
+                className="post-page-btn"
+                onClick={() => {setModalBackground(false);
+                                setPage("login");}}                
+              >Login</button>
+              <button
+                className="post-page-btn"
+                onClick={() => {setModalBackground(false)}}
+              >I'm Good</button>
+            </div>
             </div>
           </div>
       }

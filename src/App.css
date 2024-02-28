@@ -90,6 +90,21 @@ body {
     border-radius: 15px;
 }
 
+.login-modal {
+    flex-direction: column;
+}
+
+.login-modal-btns {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.login-modal-btns button {
+    margin: 10px;
+    width: 100px;
+}
+
 .modal-btn {
     position: absolute;
     bottom: 20px;
