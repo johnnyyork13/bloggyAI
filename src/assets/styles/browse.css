@@ -60,7 +60,7 @@
     flex-direction: column;
     /* background-color: var(--eight); */
     background-color: white;
-    color: white;
+    color: var(--textDark);
     padding: 10px;
 }
 
