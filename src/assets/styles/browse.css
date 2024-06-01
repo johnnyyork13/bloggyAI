@@ -58,7 +58,8 @@
     grid-area: genreSidebar;
     display: flex;
     flex-direction: column;
-    background-color: var(--eight);
+    /* background-color: var(--eight); */
+    background-color: white;
     color: white;
     padding: 10px;
 }
