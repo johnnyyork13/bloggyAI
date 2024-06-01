@@ -67,7 +67,7 @@
 .browse-genre-header, .browse-tags-header {
     font-size: 1.3rem;
     font-weight: bolder;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .browse-genre-sidebar a {
